@@ -21,26 +21,26 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    TableView<String[]>  tb;
-    ProductTableModel tableModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //new ConnectionRest().execute("");
-        //TABLEVIEW
-        tableModel = new ProductTableModel();
-        tb = (TableView<String[]>) findViewById(R.id.tableView);
-        tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
-        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton summary = findViewById(R.id.summary);
+        summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SummaryBills.class);
                 startActivity(intent);
             }
         });

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionRest extends AsyncTask {
-    private final static String URL = "https://api.munier.me/em/product/";
+    private final static String URL = "https://api.munier.me/eb/product/";
     private JSONObject jsonObj = null;
 
     protected String doInBackground(Object[] strings) {

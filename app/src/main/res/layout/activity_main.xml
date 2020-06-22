@@ -4,20 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="15dp"
     tools:context=".MainActivity">
 
     <de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="530dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|center"
         android:rotation="45"
+        app:layout_anchor="@+id/tableView"
+        app:layout_anchorGravity="bottom|center"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

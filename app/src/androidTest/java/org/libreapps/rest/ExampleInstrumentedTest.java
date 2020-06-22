@@ -1,4 +1,4 @@
-package com.example.android_project;
+package org.libreapps.rest;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.android_project", appContext.getPackageName());
+        assertEquals("org.libreapps.rest", appContext.getPackageName());
     }
 }

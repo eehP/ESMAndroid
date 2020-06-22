@@ -1,4 +1,4 @@
-package com.example.android_project;
+package org.libreapps.rest;
 
 import org.junit.Test;
 

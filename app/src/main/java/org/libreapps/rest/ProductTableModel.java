@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ProductTableModel {
-    private String[] columnNames = {"Id","Nom","Type","Prix"};
+    private String[] columnNames = {"Id","Nom","Date","Prix"};
     private ArrayList<Product> listProducts = new ArrayList<Product>();
     private ConnectionRest connectionRest = null;
 

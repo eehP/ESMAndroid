@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ProductTableModel {
-    private String[] columnNames = {"Id","Nom","Date","Prix"};
+    private String[] columnNames = {"Date","Nom","Prix"};
     private ArrayList<Product> listProducts = new ArrayList<Product>();
     private ConnectionRest connectionRest = null;
 
@@ -20,17 +20,16 @@ public class ProductTableModel {
         listProducts = refreshProducts();
         Product obj;
         if(listProducts != null) {
-            String[][] products = new String[listProducts.size()][4];
+            String[][] products = new String[listProducts.size()][3];
             for (int i = 0; i < listProducts.size(); i++) {
                 obj = listProducts.get(i);
-                products[i][0] = "" + obj.getId();
+                products[i][0] = obj.getType();
                 products[i][1] = obj.getName();
-                products[i][2] = obj.getType();
-                products[i][3] = "" + obj.getPrice();
+                products[i][2] = "" + obj.getPrice();
             }
             return products;
         }
-        return new String[0 ][4];
+        return new String[0 ][3];
     }
     public ArrayList<Product> refreshProducts(){
         try{

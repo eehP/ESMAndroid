@@ -1,23 +1,10 @@
 package org.libreapps.rest;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,16 +14,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //new ConnectionRest().execute("");
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button add = findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddBill.class);
                 startActivity(intent);
             }
         });
 
-        FloatingActionButton summary = findViewById(R.id.summary);
+        Button summary = findViewById(R.id.summary);
         summary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

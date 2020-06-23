@@ -11,12 +11,12 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EditActivity extends AppCompatActivity {
+public class AddBill extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.add_bill);
 
         final EditText nameEditTxt = (EditText) findViewById(R.id.nameEditTxt);
         final EditText typeEditTxt = (EditText) findViewById(R.id.typeEditTxt);
@@ -37,11 +37,20 @@ public class EditActivity extends AppCompatActivity {
 
                     connectionRest.execute("POST");
 
-                    Intent intent = new Intent(EditActivity.this, MainActivity.class);
+                    Intent intent = new Intent(AddBill.this, MainActivity.class);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddBill.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

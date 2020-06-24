@@ -19,7 +19,8 @@ public class AddBill extends AppCompatActivity {
         setContentView(R.layout.add_bill);
 
         final EditText nameEditTxt = (EditText) findViewById(R.id.nameEditTxt);
-        final EditText typeEditTxt = (EditText) findViewById(R.id.typeEditTxt);
+        final EditText nicknameEditTxt = (EditText) findViewById(R.id.nameEditTxt2);
+        final EditText typeEditTxt = (EditText) findViewById(R.id.editTextDate);
         final EditText priceEditTxt = (EditText) findViewById(R.id.priceEditTxt);
 
         Button buttonOk = (Button) findViewById(R.id.button_ok);
@@ -30,7 +31,7 @@ public class AddBill extends AppCompatActivity {
                 try {
                     ConnectionRest connectionRest = new ConnectionRest();
                     JSONObject product = new JSONObject();
-                    product.put("name", nameEditTxt.getText().toString());
+                    product.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
                     product.put("type", typeEditTxt.getText().toString());
                     product.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
                     connectionRest.setJsonObj(product);

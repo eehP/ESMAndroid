@@ -8,8 +8,8 @@
 
     <de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="303dp"
+        android:layout_height="292dp"
         app:layout_anchor="@+id/tableView"
         app:layout_anchorGravity="center" />
 

@@ -7,7 +7,20 @@
 
     <de.codecrafters.tableview.TableView
         android:id="@+id/tableView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="648dp" />
 
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="@string/query_hint"
+        android:iconifiedBydefault="false"
+        android:id="@+id/searchview">
+    </SearchView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/myList">
+    </ListView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

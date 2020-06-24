@@ -6,9 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".SummaryBills">
 
-<de.codecrafters.tableview.TableView
-    android:id="@+id/tableView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/tableView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/tableView"
+        app:layout_anchorGravity="center" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/btn_classic"
+        android:drawableLeft="@drawable/ic_baseline_list_24"
+        android:text="Search"
+        android:textColor="#FFFFFF"
+        app:layout_anchor="@+id/tableView"
+        app:layout_anchorGravity="bottom|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

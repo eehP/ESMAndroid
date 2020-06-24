@@ -20,16 +20,17 @@ public class ProductTableModel {
         listProducts = refreshProducts();
         Product obj;
         if(listProducts != null) {
-            String[][] products = new String[listProducts.size()][3];
+            String[][] products = new String[listProducts.size()][4];
             for (int i = 0; i < listProducts.size(); i++) {
                 obj = listProducts.get(i);
                 products[i][0] = obj.getType();
                 products[i][1] = obj.getName();
-                products[i][2] = "" + obj.getPrice();
+                products[i][2] = "" + obj.getPrice() + " €";
+                products[i][3] = "toto";
             }
             return products;
         }
-        return new String[0 ][3];
+        return new String[0][4];
     }
     public ArrayList<Product> refreshProducts(){
         try{

@@ -38,5 +38,14 @@ public class SummaryBills extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SummaryBills.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

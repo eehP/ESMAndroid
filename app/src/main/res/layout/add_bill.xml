@@ -20,20 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textview_lbid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Id :"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textview_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="40px"
-                android:text="ID"
-                android:textSize="14sp" />
 
         </TableRow>
 
@@ -66,7 +52,7 @@
                 android:id="@+id/textview_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Type :"
+                android:text="Date :"
                 android:textSize="14sp" />
 
             <EditText
@@ -74,8 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Type"
+                android:inputType="date"
+                android:text="22/02/2020"
                 android:textSize="14sp" />
         </TableRow>
 

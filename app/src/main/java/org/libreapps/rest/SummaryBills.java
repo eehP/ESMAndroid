@@ -2,8 +2,11 @@ package org.libreapps.rest;
 
         import androidx.appcompat.app.AppCompatActivity;
 
+        import android.content.Intent;
         import android.graphics.Color;
         import android.os.Bundle;
+        import android.view.View;
+        import android.widget.Button;
 
         import de.codecrafters.tableview.TableView;
         import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
@@ -26,5 +29,15 @@ public class SummaryBills extends AppCompatActivity {
         tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
         tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
         tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
+
+        Button summary = findViewById(R.id.search);
+        summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SummaryBills.this, SearchBills.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }

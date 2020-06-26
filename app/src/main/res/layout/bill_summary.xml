@@ -7,19 +7,6 @@
     android:background="#FFFFFF"
     tools:context=".SummaryBills">
 
-    <de.codecrafters.tableview.TableView
-        android:id="@+id/tableView"
-        android:layout_width="367dp"
-        android:layout_height="320dp"
-        android:layout_marginTop="56dp"
-        app:layout_anchorGravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search">
-
-    </de.codecrafters.tableview.TableView>
-
     <Button
         android:id="@+id/button_cancel"
         android:layout_width="32dp"
@@ -69,5 +56,27 @@
         app:layout_constraintTop_toTopOf="@+id/search"
         app:srcCompat="@drawable/ic_search" />
 
+    <ScrollView
+        android:id="@+id/last_elements"
+        android:layout_width="359dp"
+        android:layout_height="309dp"
+        android:layout_marginTop="45dp"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="0dip"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/scroll_bar_thumb_search"
+        android:scrollbarTrackVertical="@drawable/scroll_bar_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search">
+
+        <LinearLayout
+            android:id="@+id/list_elements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

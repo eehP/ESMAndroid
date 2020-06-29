@@ -11,13 +11,12 @@
         android:id="@+id/nameEditTxt2"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Prénom"
+        android:inputType="textPersonName"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/nameEditTxt" />
 
@@ -60,12 +59,11 @@
         android:id="@+id/nameEditTxt"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:ems="10"
         android:hint="Nom"
         android:inputType="textPersonName"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/textview_name" />
 
@@ -75,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:text="Nom :"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,13 +83,12 @@
         android:id="@+id/priceEditTxt"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="0.0€"
         android:inputType="numberDecimal"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
@@ -119,26 +116,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_name2" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="216dp"
-        android:layout_height="173dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="JJ/MM/AAAA"
         android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/nameEditTxt2" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

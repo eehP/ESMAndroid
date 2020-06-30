@@ -6,7 +6,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.libreapps.rest.obj.Product;
+import org.libreapps.rest.obj.ProductJSON;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConnectionRest extends AsyncTask {
     private final static String URL = "https://api.munier.me/eb/product/";
@@ -101,12 +100,12 @@ public class ConnectionRest extends AsyncTask {
         return response.toString();
     }
 
-    public ArrayList<Product> parse(final String json) {
+    public ArrayList<ProductJSON> parse(final String json) {
         try {
             final ArrayList products = new ArrayList<>();
             final JSONArray jProductArray = new JSONArray(json);
             for (int i = 0; i < jProductArray.length(); i++) {
-                products.add(new Product(jProductArray.optJSONObject(i)));
+                products.add(new ProductJSON(jProductArray.optJSONObject(i)));
             }
             return products;
         } catch (JSONException e) {

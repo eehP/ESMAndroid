@@ -14,7 +14,10 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".AddBill"></activity>
         <activity android:name=".SummaryBills"></activity>
-        <activity android:name=".SearchBills"></activity>
+        <activity
+            android:name=".SearchBills"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

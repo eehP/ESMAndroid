@@ -1,11 +1,11 @@
 package org.libreapps.rest;
-import org.libreapps.rest.obj.Product;
+import org.libreapps.rest.obj.ProductJSON;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ProductTableModel {
     private String[] columnNames = {"Date","Nom","Prix"};
-    private ArrayList<Product> listProducts = new ArrayList<Product>();
+    private ArrayList<ProductJSON> listProducts = new ArrayList<ProductJSON>();
     private ConnectionRest connectionRest = null;
 
     //CONSTRUCTOR
@@ -18,7 +18,7 @@ public class ProductTableModel {
     //RETURN TABLE ROWS
     public  String[][] getProducts() {
         listProducts = refreshProducts();
-        Product obj;
+        ProductJSON obj;
         if(listProducts != null) {
             String[][] products = new String[listProducts.size()][4];
             for (int i = 0; i < listProducts.size(); i++) {
@@ -32,7 +32,7 @@ public class ProductTableModel {
         }
         return new String[0][4];
     }
-    public ArrayList<Product> refreshProducts(){
+    public ArrayList<ProductJSON> refreshProducts(){
         try{
             connectionRest = new ConnectionRest();
             connectionRest.execute("GET");
@@ -47,7 +47,7 @@ public class ProductTableModel {
         }
         return null;
     }
-    public Product get(int row){
+    public ProductJSON get(int row){
         return listProducts.get(row);
     }
 }

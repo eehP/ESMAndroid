@@ -1,32 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".SearchBills">
-
-    <de.codecrafters.tableview.TableView
-        android:id="@+id/tableView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="648dp" >
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text_view_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000" />
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ListView
-            android:id="@+id/myList"
-            android:layout_width="match_parent"
-            android:layout_height="602dp"
-            android:layout_marginTop="10dp">
-        </ListView>
-    </de.codecrafters.tableview.TableView>
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        android:queryHint="@string/query_hint"
-        app:layout_anchor="@+id/searchView"
-        app:layout_anchorGravity="center">
-    </SearchView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

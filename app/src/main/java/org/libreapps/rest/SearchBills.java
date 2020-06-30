@@ -1,67 +1,64 @@
 package org.libreapps.rest;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
 
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import org.libreapps.rest.ViewSearch.ProductJSON;
+import org.libreapps.rest.ViewSearch.RequestInterface;
 
 
 public class SearchBills extends AppCompatActivity {
 
-    private ConnectionRest connectionRest = null;
-    TableView<String[]>  tb;
-    ProductTableModel tableModel;
-
-    SearchView mySearchView;
-    ListView myList;
-    String SearchS = null;
-
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
+    public static final String BASE_URL = "https://api.munier.me";
+    private TextView textViewResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
+        textViewResult = findViewById(R.id.text_view_result);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        mySearchView = (SearchView)findViewById(R.id.searchView);
-        myList = (ListView)findViewById(R.id.myList);
-
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
-        myList.setAdapter(adapter);
-        mySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        Call<List<ProductJSON>> call = requestInterface.getProducts();
+        call.enqueue(new Callback<List<ProductJSON>>() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                    return false;
+            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
                 }
+                List<ProductJSON> productJSONS = response.body();
+                for (ProductJSON productJSON : productJSONS) {
+                    String content = "";
+                    content += "ID: " + productJSON.getId() + "\n";
+                    content += "User ID: " + productJSON.getName() + "\n";
+                    content += "Title: " + productJSON.getType() + "\n";
+                    content += "Text: " + productJSON.getPrice() + "\n\n";
+                    textViewResult.append(content);
+                }
+            }
             @Override
-            public boolean onQueryTextChange (String s){
-                adapter.getFilter().filter(s);
-                return false;
+            public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
             }
         });
-
-        //TABLEVIEW
-        tableModel = new ProductTableModel();
-        tb = (TableView<String[]>) findViewById(R.id.tableView);
-        tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
-        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
     }
 }
+
 
 
 

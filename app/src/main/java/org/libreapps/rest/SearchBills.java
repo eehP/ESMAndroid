@@ -1,5 +1,6 @@
 package org.libreapps.rest;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
@@ -60,6 +62,19 @@ public class SearchBills extends AppCompatActivity {
         tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
         tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
         tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
+
+        //TABLE CLICK
+        tb.addDataClickListener(new TableDataClickListener() {
+            @Override
+            public void onDataClicked(int rowIndex, Object clickedData) {
+                Intent intent = new Intent(SearchBills.this, AddBill.class);
+                intent.putExtra("id", tableModel.get(rowIndex).getId());
+                intent.putExtra("type", ((String[])clickedData)[1]);
+                intent.putExtra("name", ((String[])clickedData)[2]);
+                intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));
+                startActivity(intent);
+            }
+        });
     }
 }
 

@@ -3,7 +3,9 @@ package org.libreapps.rest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -59,19 +61,26 @@ public class SearchBills extends AppCompatActivity {
         tableModel = new ProductTableModel();
         tb = (TableView<String[]>) findViewById(R.id.tableView);
         tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
+        tb.setHeaderBackgroundColor(Color.parseColor("#3399FF"));
         tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
 
-        //TABLE CLICK
-        tb.addDataClickListener(new TableDataClickListener() {
+        String[][] products = tableModel.getProducts();
+        String[][] reverse_products = tableModel.getProducts();
+
+        int m_reverseIncrement = 0;
+        for(int increment = products.length-1; increment>=0; increment--){
+            reverse_products[m_reverseIncrement] = products[increment];
+            m_reverseIncrement++;
+        }
+
+        tb.setDataAdapter(new SimpleTableDataAdapter(this, reverse_products));
+
+
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataClicked(int rowIndex, Object clickedData) {
-                Intent intent = new Intent(SearchBills.this, AddBill.class);
-                intent.putExtra("id", tableModel.get(rowIndex).getId());
-                intent.putExtra("type", ((String[])clickedData)[1]);
-                intent.putExtra("name", ((String[])clickedData)[2]);
-                intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchBills.this, SummaryBills.class);
                 startActivity(intent);
             }
         });

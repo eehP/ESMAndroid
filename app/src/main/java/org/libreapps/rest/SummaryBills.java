@@ -49,11 +49,11 @@ public class SummaryBills extends AppCompatActivity {
 
         for(int increment = products.length-1; increment >= 0 && increment >= (products.length - 10); increment--){
             String m_priceCompletion = "";
-            for(int completedSize = 0; completedSize < (40 - products[increment][2].length() - products[increment][0].length()); completedSize++){
+            for(int completedSize = 0; completedSize < (40 - products[increment][3].length() - products[increment][1].length()); completedSize++){
                 m_priceCompletion += " ";
             }
-            String m_data = "\t\t" + products[increment][1].toString() +
-                            "\n\n\t\t" + products[increment][0].toString()  + m_priceCompletion + products[increment][2].toString() + "€";
+            String m_data = "\t\t" + products[increment][2].toString() +
+                            "\n\n\t\t" + products[increment][1].toString()  + m_priceCompletion + products[increment][3].toString() + "€";
 
             TextView m_element = new TextView(this);
             m_element.setBackgroundResource(R.drawable.text_message_scroll);

@@ -67,14 +67,26 @@ public class SearchBills extends AppCompatActivity {
         String[][] products = tableModel.getProducts();
         String[][] reverse_products = tableModel.getProducts();
 
-        int m_reverseIncrement = 0;
-        for(int increment = products.length-1; increment>=0; increment--){
-            reverse_products[m_reverseIncrement] = products[increment];
-            m_reverseIncrement++;
-        }
+//        int m_reverseIncrement = 0;
+//        for(int increment = products.length-1; increment>=0; increment--){
+//            reverse_products[m_reverseIncrement] = products[increment];
+//            m_reverseIncrement++;
+//        }
 
         tb.setDataAdapter(new SimpleTableDataAdapter(this, reverse_products));
 
+        //TABLE CLICK
+        tb.addDataClickListener(new TableDataClickListener() {
+            @Override
+            public void onDataClicked(int rowIndex, Object clickedData) {
+                Intent intent = new Intent(SearchBills.this, AddBill.class);
+                intent.putExtra("id", tableModel.get(rowIndex).getId());
+                intent.putExtra("type", ((String[])clickedData)[1]);
+                intent.putExtra("name", ((String[])clickedData)[2]);
+                intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));
+                startActivity(intent);
+            }
+        });
 
         Button buttonCancel = (Button) findViewById(R.id.button_cancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {

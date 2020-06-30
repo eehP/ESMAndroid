@@ -67,13 +67,19 @@ public class SearchBills extends AppCompatActivity {
         String[][] products = tableModel.getProducts();
         String[][] reverse_products = tableModel.getProducts();
 
-//        int m_reverseIncrement = 0;
-//        for(int increment = products.length-1; increment>=0; increment--){
-//            reverse_products[m_reverseIncrement] = products[increment];
-//            m_reverseIncrement++;
-//        }
+        int m_reverseIncrement = 0;
+        for(int increment = products.length-1; increment>=0; increment--){
+            reverse_products[m_reverseIncrement] = products[increment];
+            m_reverseIncrement++;
+        }
 
         tb.setDataAdapter(new SimpleTableDataAdapter(this, reverse_products));
+
+        //TABLE CHANGE
+        tb.setColumnWeight(0, 0);
+        tb.setColumnWeight(1, 30);
+        tb.setColumnWeight(2, 50);
+        tb.setColumnWeight(3, 20);
 
         //TABLE CLICK
         tb.addDataClickListener(new TableDataClickListener() {

@@ -80,7 +80,8 @@ public class SearchBills extends AppCompatActivity {
             @Override
             public void onDataClicked(int rowIndex, Object clickedData) {
                 Intent intent = new Intent(SearchBills.this, AddBill.class);
-                intent.putExtra("id", tableModel.get(rowIndex).getId());
+                // intent.putExtra("id", tableModel.get(rowIndex).getId());
+                intent.putExtra("id", Integer.parseInt(((String[]) clickedData)[0]));
                 intent.putExtra("type", ((String[])clickedData)[1]);
                 intent.putExtra("name", ((String[])clickedData)[2]);
                 intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));

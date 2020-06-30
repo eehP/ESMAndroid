@@ -46,12 +46,20 @@ public class AddBill extends AppCompatActivity {
                 try {
                     ConnectionRest connectionRest = new ConnectionRest();
                     JSONObject product = new JSONObject();
+                    if(id != 0){
+                        product.put("id", id);
+                    }
                     product.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
                     product.put("type", typeEditTxt.getText().toString());
                     product.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
                     connectionRest.setJsonObj(product);
 
-                    connectionRest.execute("POST");
+                    if(id != 0){
+                        connectionRest.execute("PUT");
+                    }
+                    else {
+                        connectionRest.execute("POST");
+                    }
 
                     Intent intent = new Intent(AddBill.this, SearchBills.class);
                     startActivity(intent);

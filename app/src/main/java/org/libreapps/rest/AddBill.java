@@ -33,7 +33,14 @@ public class AddBill extends AppCompatActivity {
         Button buttonDelete = (Button) findViewById(R.id.button_delete);
 
         if(id != 0){
-            nameEditTxt.setText(name);
+
+            String nameSplit = name;
+            String arr[] = nameSplit.split(" ", 2);
+            String lastName = arr[0];
+            String firstName = arr[1];
+
+            nameEditTxt.setText(lastName);
+            nicknameEditTxt.setText(firstName);
             typeEditTxt.setText(type);
             priceEditTxt.setText("" + price);
             buttonOk.setText("Modifier");

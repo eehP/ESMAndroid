@@ -42,11 +42,24 @@ public class SearchBills extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        recyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-
+        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        Call<List<ProductJSON>> call = requestInterface.getProducts();
+        call.enqueue(new Callback<List<ProductJSON>>() {
+            @Override
+            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
+                List<ProductJSON> productJSONS = response.body();
+                for (ProductJSON productJSON : productJSONS) {
+                    String content = "";
+                    content += "ID: " + productJSON.getId() + "\n";
+                    content += "User ID: " + productJSON.getName() + "\n";
+                    content += "Title: " + productJSON.getType() + "\n";
+                    content += "Text: " + productJSON.getPrice() + "\n\n";
+                }
+            }
+            public void onFailure (Call < List < ProductJSON >> call, Throwable t){
+                System.out.println(t);
+            }
+        });
         List<ProductJSON> modelClassList = new ArrayList<>();
         modelClassList.add(new ProductJSON("1", "test", "test", "test1"));
         modelClassList.add(new ProductJSON("2", "test", "test", "test2"));
@@ -56,6 +69,12 @@ public class SearchBills extends AppCompatActivity {
         modelClassList.add(new ProductJSON("6", "test", "test", "test6"));
         modelClassList.add(new ProductJSON("7", "test", "test", "test7"));
         modelClassList.add(new ProductJSON("8", "test", "test", "test8"));
+
+        recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
 
         adapter = new Adapter(modelClassList);
         recyclerView.setAdapter(adapter);

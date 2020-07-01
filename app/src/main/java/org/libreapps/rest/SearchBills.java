@@ -3,16 +3,20 @@ package org.libreapps.rest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
@@ -59,24 +63,50 @@ public class SearchBills extends AppCompatActivity {
         tableModel = new ProductTableModel();
         tb = (TableView<String[]>) findViewById(R.id.tableView);
         tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.parseColor("#03DAC5"));
+        tb.setHeaderBackgroundColor(Color.parseColor("#3399FF"));
         tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableModel.getProducts()));
+
+        String[][] products = tableModel.getProducts();
+        final String[][] reverse_products = tableModel.getProducts();
+
+        int m_reverseIncrement = 0;
+        for(int increment = products.length-1; increment>=0; increment--){
+            reverse_products[m_reverseIncrement] = products[increment];
+            m_reverseIncrement++;
+        }
+
+        tb.setDataAdapter(new SimpleTableDataAdapter(this, reverse_products));
+
+        //TABLE CHANGE
+        tb.setColumnWeight(0, 0);
+
+        tb.setColumnWeight(1, 30);
+        tb.setColumnWeight(2, 50);
+        tb.setColumnWeight(3, 20);
 
         //TABLE CLICK
         tb.addDataClickListener(new TableDataClickListener() {
             @Override
             public void onDataClicked(int rowIndex, Object clickedData) {
                 Intent intent = new Intent(SearchBills.this, AddBill.class);
-                intent.putExtra("id", tableModel.get(rowIndex).getId());
+                // intent.putExtra("id", tableModel.get(rowIndex).getId());
+                intent.putExtra("id", Integer.parseInt(((String[]) clickedData)[0]));
                 intent.putExtra("type", ((String[])clickedData)[1]);
                 intent.putExtra("name", ((String[])clickedData)[2]);
                 intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));
                 startActivity(intent);
             }
         });
+
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchBills.this, SummaryBills.class);
+                startActivity(intent);
+            }
+        });
     }
 }
-
 
 

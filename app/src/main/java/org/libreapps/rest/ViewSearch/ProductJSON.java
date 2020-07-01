@@ -26,6 +26,16 @@ public class ProductJSON {
     public String getType() { return type; }
 
     public String getPrice() { return price; }
+
+    @Override
+    public String toString() {
+        return "ProductJSON{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
 }
 
 

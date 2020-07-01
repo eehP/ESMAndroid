@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,13 +25,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import org.libreapps.rest.ViewSearch.Adapter;
+import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.ProductJSON;
 import org.libreapps.rest.ViewSearch.RequestInterface;
 
 
 public class SearchBills extends AppCompatActivity {
 
-    public static final String BASE_URL = "https://api.munier.me";
     private RecyclerView recyclerView;
     private Adapter adapter;
 
@@ -37,14 +40,8 @@ public class SearchBills extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-        Call<List<ProductJSON>> call = requestInterface.getProducts();
-        call.enqueue(new Callback<List<ProductJSON>>() {
+        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
+        productJSON.enqueue(new Callback<List<ProductJSON>>() {
             @Override
             public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
                 List<ProductJSON> productJSONS = response.body();
@@ -90,6 +87,8 @@ public class SearchBills extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

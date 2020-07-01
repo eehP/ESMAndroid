@@ -65,7 +65,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ProductJSON product : modelClassListFull){
-                    if (product.getId().toLowerCase().contains(filterPattern)) {
+                    if (product.getId().toLowerCase().contains(filterPattern)||product.getName().toLowerCase().contains(filterPattern)||product.getType().toLowerCase().contains(filterPattern)||product.getPrice().toLowerCase().contains(filterPattern) ) {
                         filteredList.add(product);
                     }
                 }

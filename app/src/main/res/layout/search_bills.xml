@@ -8,28 +8,10 @@
     android:padding="8dp"
     tools:context=".SearchBills">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        tools:layout_editor_absoluteX="2dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/query_hint"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="18dp">
-
-        </TextView>
-    </androidx.appcompat.widget.Toolbar>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="488dp"
-        android:layout_height="698dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"

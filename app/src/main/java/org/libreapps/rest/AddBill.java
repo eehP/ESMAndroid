@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -168,16 +170,21 @@ public class AddBill extends AppCompatActivity {
     }
 
     private void returnAlerte(String title, String message){
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
 
+        LayoutInflater factory = LayoutInflater.from(this);
+        View my_layout = factory.inflate(R.layout.alert_box, null);
+        TextView my_title = (TextView) my_layout.findViewById(R.id.m_title);
+        TextView my_content = (TextView) my_layout.findViewById(R.id.m_content);
+        my_title.setText(title);
+        my_content.setText(message);
+
+        AlertDialog.Builder m_alert = new AlertDialog.Builder(this, R.style.CustomAlertDialog)
+                .setView(my_layout)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // No action
                     }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                });
+        m_alert.show();
     }
 }

@@ -53,7 +53,6 @@
         android:layout_marginTop="20dp"
         android:iconifiedByDefault="false"
         android:queryHint="@string/query_hint"
-        app:layout_anchor="@+id/searchView"
         app:layout_anchorGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

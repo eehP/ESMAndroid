@@ -15,18 +15,22 @@ import org.libreapps.rest.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Callback;
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
     private List<ProductJSON> modelClassList;
     private List<ProductJSON> modelClassListFull;
+    private RecyclerViewListener listener;
 
 
-    public Adapter(List<ProductJSON> modelClassList) {
+    public Adapter(List<ProductJSON> modelClassList, RecyclerViewListener listener) {
         this.modelClassList = modelClassList;
         modelClassListFull = new ArrayList<>(modelClassList);
+        this.listener = listener;
     }
 
-    public void setData(List<ProductJSON> modelClassList){
+    public void setData(List<ProductJSON> modelClassList) {
         this.modelClassList = modelClassList;
     }
 
@@ -66,13 +70,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ProductJSON> filteredList = new ArrayList<>();
 
-            if (constraint == null || constraint.length() == 0){
+            if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(modelClassListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (ProductJSON product : modelClassListFull){
-                    if (product.getId().toLowerCase().contains(filterPattern)||product.getName().toLowerCase().contains(filterPattern)||product.getType().toLowerCase().contains(filterPattern)||product.getPrice().toLowerCase().contains(filterPattern) ) {
+                for (ProductJSON product : modelClassListFull) {
+                    if (product.getId().toLowerCase().contains(filterPattern) || product.getName().toLowerCase().contains(filterPattern) || product.getType().toLowerCase().contains(filterPattern) || product.getPrice().toLowerCase().contains(filterPattern)) {
                         filteredList.add(product);
                     }
                 }
@@ -92,19 +96,26 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         }
     };
 
-    class ViewHolder extends  RecyclerView.ViewHolder {
-        private TextView id;
-        private TextView name;
-        private TextView type;
-        private TextView price;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView id, name, type, price;
 
-        public ViewHolder(@NonNull View itemView){
-            super(itemView);
+        public ViewHolder(@NonNull View view) {
+            super(view);
 
             id = itemView.findViewById(R.id.textId);
             name = itemView.findViewById(R.id.textName);
             type = itemView.findViewById(R.id.textType);
             price = itemView.findViewById(R.id.textPrice);
+
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view, getAdapterPosition());
+        }
+    }
+    public interface RecyclerViewListener {
+        void onClick(View view, int position);
     }
 }

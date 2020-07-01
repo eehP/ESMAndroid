@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 public class ProductTableModel {
 
     private String[] columnNames = {"Id", "Date","Nom", "Prix (€)"};
-    private ArrayList<Product> listProducts = new ArrayList<Product>();
+    private ArrayList<ProductJSON> listProducts = new ArrayList<ProductJSON>();
 
     private ConnectionRest connectionRest = null;
 

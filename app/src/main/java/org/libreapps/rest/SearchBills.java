@@ -1,5 +1,6 @@
 package org.libreapps.rest;
 
+
 import android.os.Bundle;
 
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,6 +87,7 @@ public class SearchBills extends AppCompatActivity {
                 return false;
             }
 
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
@@ -91,10 +95,6 @@ public class SearchBills extends AppCompatActivity {
             }
         });
         return true;
+
     }
 }
-
-
-
-
-

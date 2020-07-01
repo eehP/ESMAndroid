@@ -46,23 +46,18 @@ public class SearchBills extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<ProductJSON> modelClassList = new ArrayList<>();
-        adapter = new Adapter(modelClassList);
-        getAllProduct();
-        recyclerView.setAdapter(adapter);
-    }
 
-
-    public void getAllProduct() {
-        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
+        final Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
         productJSON.enqueue(new Callback<List<ProductJSON>>() {
             @Override
             public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
 
                 if (response.isSuccessful()) {
-                    List<ProductJSON> productJSONS = response.body();
 
+                    List<ProductJSON> productJSONS = response.body();
+                    adapter = new Adapter(productJSONS);
                     adapter.setData(productJSONS);
+                    adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
                 }
             }

@@ -28,7 +28,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     public void setData(List<ProductJSON> modelClassList){
         this.modelClassList = modelClassList;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -88,6 +87,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         protected void publishResults(CharSequence constraint, FilterResults results) {
             modelClassList.clear();
             modelClassList.addAll((List) results.values);
+
             notifyDataSetChanged();
         }
     };

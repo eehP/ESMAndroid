@@ -26,6 +26,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         modelClassListFull = new ArrayList<>(modelClassList);
     }
 
+    public void setData(List<ProductJSON> modelClassList){
+        this.modelClassList = modelClassList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -41,7 +46,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         String name = modelClassList.get(position).getName();
         String type = modelClassList.get(position).getType();
         String price = modelClassList.get(position).getPrice();
-        viewholder.setData(id, name, type, price);
+        viewholder.id.setText(id);
+        viewholder.name.setText(name);
+        viewholder.type.setText(type);
+        viewholder.price.setText(price);
     }
 
     @Override
@@ -97,12 +105,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
             name = itemView.findViewById(R.id.textName);
             type = itemView.findViewById(R.id.textType);
             price = itemView.findViewById(R.id.textPrice);
-        }
-        private void setData(String idText, String nameText, String typeText, String priceText){
-            id.setText(idText);
-            name.setText(nameText);
-            type.setText(typeText);
-            price.setText(priceText);
         }
     }
 }

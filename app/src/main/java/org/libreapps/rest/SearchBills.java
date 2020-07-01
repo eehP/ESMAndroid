@@ -2,6 +2,7 @@ package org.libreapps.rest;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,43 +41,35 @@ public class SearchBills extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
 
-        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
-        productJSON.enqueue(new Callback<List<ProductJSON>>() {
-            @Override
-            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
-                List<ProductJSON> productJSONS = response.body();
-                for (ProductJSON productJSON : productJSONS) {
-                    String content = "";
-                    content += "ID: " + productJSON.getId() + "\n";
-                    content += "User ID: " + productJSON.getName() + "\n";
-                    content += "Title: " + productJSON.getType() + "\n";
-                    content += "Text: " + productJSON.getPrice() + "\n\n";
-                }
-            }
-            public void onFailure (Call < List < ProductJSON >> call, Throwable t){
-                System.out.println(t);
-            }
-        });
-        List<ProductJSON> modelClassList = new ArrayList<>();
-        modelClassList.add(new ProductJSON("1", "test", "test", "test1"));
-        modelClassList.add(new ProductJSON("2", "test", "test", "test2"));
-        modelClassList.add(new ProductJSON("3", "test", "test", "test3"));
-        modelClassList.add(new ProductJSON("4", "test", "test", "test4"));
-        modelClassList.add(new ProductJSON("5", "test", "test", "test5"));
-        modelClassList.add(new ProductJSON("6", "test", "test", "test6"));
-        modelClassList.add(new ProductJSON("7", "test", "test", "test7"));
-        modelClassList.add(new ProductJSON("8", "test", "test", "test8"));
-
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-
+        List<ProductJSON> modelClassList = new ArrayList<>();
         adapter = new Adapter(modelClassList);
+        getAllProduct();
         recyclerView.setAdapter(adapter);
+    }
 
-        adapter.notifyDataSetChanged();
+
+    public void getAllProduct() {
+        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
+        productJSON.enqueue(new Callback<List<ProductJSON>>() {
+            @Override
+            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
+
+                if (response.isSuccessful()) {
+                    List<ProductJSON> productJSONS = response.body();
+
+                    adapter.setData(productJSONS);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+            public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
+                Log.e("failure", t.getLocalizedMessage());
+            }
+        });
     }
 
     @Override

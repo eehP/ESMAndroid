@@ -2,7 +2,9 @@ package org.libreapps.rest.ViewSearch;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ProductJSON {
+import java.io.Serializable;
+
+public class ProductJSON implements Serializable {
 
     String id;
 

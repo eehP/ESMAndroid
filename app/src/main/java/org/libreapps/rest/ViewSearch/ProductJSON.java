@@ -4,19 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProductJSON {
 
-    private int id;
+    String id;
 
-    private String name;
+    String name;
 
-    private String type;
+    String type;
 
-    private String price;
-    @SerializedName("body")
-    private String text;
+    String price;
 
-    public String getText() { return text; }
+    public ProductJSON(String id, String name, String type, String price) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
     public String getName() { return name; }
 

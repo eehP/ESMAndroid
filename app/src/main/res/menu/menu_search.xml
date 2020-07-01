@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.libreapps.rest.SearchBills">
     <item
-        android:id="@+id/search"
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_search"
-        android:title="Search"
+        android:hint="@string/query_hint"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.widget.SearchView"/>
+        app:actionViewClass="android.widget.SearchView"
+        android:title="@string/search" />
+
 </menu>

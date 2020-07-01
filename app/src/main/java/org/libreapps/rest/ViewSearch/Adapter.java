@@ -3,6 +3,8 @@ package org.libreapps.rest.ViewSearch;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,14 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.libreapps.rest.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
     private List<ProductJSON> modelClassList;
+    private List<ProductJSON> modelClassListFull;
+
 
     public Adapter(List<ProductJSON> modelClassList) {
         this.modelClassList = modelClassList;
+        modelClassListFull = new ArrayList<>(modelClassList);
     }
 
     @NonNull
@@ -42,6 +48,41 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public int getItemCount() {
         return modelClassList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return modelClassFilter;
+    }
+
+    private Filter modelClassFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<ProductJSON> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(modelClassListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (ProductJSON product : modelClassListFull){
+                    if (product.getId().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(product);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            modelClassList.clear();
+            modelClassList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     class ViewHolder extends  RecyclerView.ViewHolder {
         private TextView id;

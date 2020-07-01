@@ -2,7 +2,11 @@ package org.libreapps.rest;
 
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +30,7 @@ public class SearchBills extends AppCompatActivity {
 
     public static final String BASE_URL = "https://api.munier.me";
     private RecyclerView recyclerView;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,34 +57,37 @@ public class SearchBills extends AppCompatActivity {
         modelClassList.add(new ProductJSON("7", "test", "test", "test7"));
         modelClassList.add(new ProductJSON("8", "test", "test", "test8"));
 
-        Adapter adapter = new Adapter(modelClassList);
+        adapter = new Adapter(modelClassList);
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
-        Call<List<ProductJSON>> call = requestInterface.getProducts();
-        call.enqueue(new Callback<List<ProductJSON>>() {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
-
-                List<ProductJSON> productJSONS = response.body();
-                for (ProductJSON productJSON : productJSONS) {
-                    String content = "";
-                    content += "ID: " + productJSON.getId() + "\n";
-                    content += "User ID: " + productJSON.getName() + "\n";
-                    content += "Title: " + productJSON.getType() + "\n";
-                    content += "Text: " + productJSON.getPrice() + "\n\n";
-
-                }
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
+
             @Override
-            public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
             }
         });
+        return true;
     }
 }
+
 
 
 

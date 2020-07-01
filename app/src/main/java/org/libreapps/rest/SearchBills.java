@@ -84,52 +84,6 @@ public class SearchBills extends AppCompatActivity {
         tb.setColumnWeight(2, 50);
         tb.setColumnWeight(3, 20);
 
-        tb.addHeaderClickListener(new TableHeaderClickListener() {
-            @Override
-            public void onHeaderClicked(int columnIndex) {
-                SortByColumn tableSorting = new SortByColumn();
-                System.out.println(columnIndex);
-                System.out.println(reverse_products.length);
-                String[][] m_resultProduct;
-                switch(columnIndex){
-                    case 1:
-                        String[][] dateSort_products = tableSorting.myDateSort(reverse_products, 1);
-                        for(String[] line : dateSort_products ) {
-                            System.out.println(Arrays.toString(line));
-                        }
-                        m_resultProduct = dateSort_products;
-                        break;
-
-                    case 2:
-                        String[][] stringSort_products = tableSorting.myStringSort(reverse_products, 2);
-                        for(String[] line : stringSort_products ) {
-                            System.out.println(Arrays.toString(line));
-                        }
-                        m_resultProduct = stringSort_products;
-                        break;
-
-                    case 3:
-                        String[][] floatSort_products = tableSorting.myFloatSort(reverse_products, 3);
-                        for(String[] line : floatSort_products ) {
-                            System.out.println(Arrays.toString(line));
-                        }
-                        m_resultProduct = floatSort_products;
-                        break;
-
-                    default:
-                        m_resultProduct = reverse_products;
-                        break;
-                }
-
-                TableView m_table = (TableView<String[]>) findViewById(R.id.tableView);
-                int childCount = m_table.getChildCount();
-                if (childCount > 1) {
-                    m_table.removeViews(1, childCount - 1);
-                }
-                m_table.setDataAdapter(new SimpleTableDataAdapter(SearchBills.this, reverse_products));//CURRENT
-            }
-        });
-
         //TABLE CLICK
         tb.addDataClickListener(new TableDataClickListener() {
             @Override

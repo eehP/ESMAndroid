@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class ProductTableModel {
-    private String[] columnNames = {"Date","Nom","Prix"};
-    private ArrayList<ProductJSON> listProducts = new ArrayList<ProductJSON>();
+
+    private String[] columnNames = {"Id", "Date","Nom", "Prix (€)"};
+    private ArrayList<Product> listProducts = new ArrayList<Product>();
+
     private ConnectionRest connectionRest = null;
 
     //CONSTRUCTOR
@@ -23,10 +25,10 @@ public class ProductTableModel {
             String[][] products = new String[listProducts.size()][4];
             for (int i = 0; i < listProducts.size(); i++) {
                 obj = listProducts.get(i);
-                products[i][0] = obj.getType();
-                products[i][1] = obj.getName();
-                products[i][2] = "" + obj.getPrice() + " €";
-                products[i][3] = "toto";
+                products[i][0] = "" + obj.getId();
+                products[i][1] = obj.getType();
+                products[i][2] = obj.getName();
+                products[i][3] = "" + obj.getPrice();
             }
             return products;
         }

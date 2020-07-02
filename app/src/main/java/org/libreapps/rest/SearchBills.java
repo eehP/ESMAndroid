@@ -1,112 +1,113 @@
 package org.libreapps.rest;
 
+
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+import android.view.inputmethod.EditorInfo;
+
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
-import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.listeners.TableDataClickListener;
-import de.codecrafters.tableview.listeners.TableHeaderClickListener;
-import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
-import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+import org.libreapps.rest.ViewSearch.Adapter;
+import org.libreapps.rest.ViewSearch.ApiClient;
+import org.libreapps.rest.ViewSearch.ProductJSON;
+
 
 
 public class SearchBills extends AppCompatActivity {
 
-    private ConnectionRest connectionRest = null;
-    TableView<String[]>  tb;
-    ProductTableModel tableModel;
-
-    SearchView mySearchView;
-    ListView myList;
-    String SearchS = null;
-
-    ArrayList<String> list;
-    ArrayAdapter<String> adapter;
+    private RecyclerView recyclerView;
+    private Adapter adapter;
+    private Adapter.RecyclerViewListener listener;
+    private ArrayList<ProductJSON> test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
+        recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        mySearchView = (SearchView)findViewById(R.id.searchView);
-        myList = (ListView)findViewById(R.id.myList);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(layoutManager);
 
-        list = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
-        myList.setAdapter(adapter);
-        mySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-
+        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
+        productJSON.enqueue(new Callback<List<ProductJSON>>() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                    return false;
+            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
+
+                if (response.isSuccessful()) {
+
+                    List<ProductJSON> productJSONS = response.body();
+                    adapter = new Adapter(productJSONS, listener);
+                    adapter.setData(productJSONS);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                    setOnClickListener();
                 }
-            @Override
-            public boolean onQueryTextChange (String s){
-                adapter.getFilter().filter(s);
-                return false;
             }
-        });
-
-        //TABLEVIEW
-        tableModel = new ProductTableModel();
-        tb = (TableView<String[]>) findViewById(R.id.tableView);
-        tb.setColumnCount(4);
-        tb.setHeaderBackgroundColor(Color.parseColor("#3399FF"));
-        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this, tableModel.getProductHeaders()));
-
-        String[][] products = tableModel.getProducts();
-        final String[][] reverse_products = tableModel.getProducts();
-
-        int m_reverseIncrement = 0;
-        for(int increment = products.length-1; increment>=0; increment--){
-            reverse_products[m_reverseIncrement] = products[increment];
-            m_reverseIncrement++;
-        }
-
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, reverse_products));
-
-        //TABLE CHANGE
-        tb.setColumnWeight(0, 0);
-
-        tb.setColumnWeight(1, 30);
-        tb.setColumnWeight(2, 50);
-        tb.setColumnWeight(3, 20);
-
-        //TABLE CLICK
-        tb.addDataClickListener(new TableDataClickListener() {
-            @Override
-            public void onDataClicked(int rowIndex, Object clickedData) {
-                Intent intent = new Intent(SearchBills.this, AddBill.class);
-                // intent.putExtra("id", tableModel.get(rowIndex).getId());
-                intent.putExtra("id", Integer.parseInt(((String[]) clickedData)[0]));
-                intent.putExtra("type", ((String[])clickedData)[1]);
-                intent.putExtra("name", ((String[])clickedData)[2]);
-                intent.putExtra("price", Double.parseDouble(((String[]) clickedData)[3]));
-                startActivity(intent);
-            }
-        });
-
-        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SearchBills.this, SummaryBills.class);
-                startActivity(intent);
+            public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
+                Log.e("failure", t.getLocalizedMessage());
             }
         });
     }
+
+    private void setOnClickListener() {
+        listener = new Adapter.RecyclerViewListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(SearchBills.this, AddBill.class);
+                startActivity(intent);
+            }
+        };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+
+    }
 }
-
-

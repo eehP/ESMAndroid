@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import android.widget.SearchView;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,7 +37,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
     private RecyclerView recyclerView;
     private Adapter adapter;
 
-    private ArrayList<ProductJSON> test;
+    private List<ProductJSON> bills;
     private RecyclerViewClickInterface recyclerViewClickInterface;
 
     @Override
@@ -62,6 +60,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
 
                     List<ProductJSON> productJSONS = response.body();
                     adapter = new Adapter(productJSONS,SearchBills.this);
+                    bills = productJSONS;
                     adapter.setData(productJSONS);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
@@ -104,6 +103,10 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(SearchBills.this, AddBill.class);
+        intent.putExtra("id", Integer.parseInt(bills.get(position).getId()));
+        intent.putExtra("name", bills.get(position).getName());
+        intent.putExtra("type", bills.get(position).getType());
+        intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
         startActivity(intent);
     }
 }

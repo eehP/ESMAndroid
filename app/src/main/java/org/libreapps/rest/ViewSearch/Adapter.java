@@ -21,13 +21,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
     private List<ProductJSON> modelClassList;
     private List<ProductJSON> modelClassListFull;
-    private RecyclerViewListener listener;
+    private RecyclerViewClickInterface recyclerViewClickInterface;
 
 
-    public Adapter(List<ProductJSON> modelClassList, RecyclerViewListener listener) {
+    public Adapter(List<ProductJSON> modelClassList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.modelClassList = modelClassList;
         modelClassListFull = new ArrayList<>(modelClassList);
-        this.listener = listener;
+        this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
     public void setData(List<ProductJSON> modelClassList) {
@@ -96,26 +96,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         }
     };
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView id, name, type, price;
 
-        public ViewHolder(@NonNull View view) {
-            super(view);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
 
             id = itemView.findViewById(R.id.textId);
             name = itemView.findViewById(R.id.textName);
             type = itemView.findViewById(R.id.textType);
             price = itemView.findViewById(R.id.textPrice);
 
-            view.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
         }
-
-        @Override
-        public void onClick(View view) {
-            listener.onClick(view, getAdapterPosition());
-        }
-    }
-    public interface RecyclerViewListener {
-        void onClick(View view, int position);
     }
 }

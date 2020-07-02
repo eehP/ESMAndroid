@@ -31,15 +31,16 @@ import retrofit2.Response;
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.ProductJSON;
+import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
 
 
-
-public class SearchBills extends AppCompatActivity {
+public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private RecyclerView recyclerView;
     private Adapter adapter;
-    private Adapter.RecyclerViewListener listener;
+
     private ArrayList<ProductJSON> test;
+    private RecyclerViewClickInterface recyclerViewClickInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +61,11 @@ public class SearchBills extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     List<ProductJSON> productJSONS = response.body();
-                    adapter = new Adapter(productJSONS, listener);
+                    adapter = new Adapter(productJSONS,recyclerViewClickInterface);
                     adapter.setData(productJSONS);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
-                    setOnClickListener();
+
                 }
             }
             public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
@@ -72,17 +73,6 @@ public class SearchBills extends AppCompatActivity {
             }
         });
     }
-
-    private void setOnClickListener() {
-        listener = new Adapter.RecyclerViewListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(SearchBills.this, AddBill.class);
-                startActivity(intent);
-            }
-        };
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -109,5 +99,11 @@ public class SearchBills extends AppCompatActivity {
         });
         return true;
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(SearchBills.this, AddBill.class);
+        startActivity(intent);
     }
 }

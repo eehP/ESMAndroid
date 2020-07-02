@@ -66,7 +66,7 @@ public class SummaryBills extends AppCompatActivity {
 
 
 
-        Button summary = findViewById(R.id.search);
+        Button summary = findViewById(R.id.manage);
         summary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

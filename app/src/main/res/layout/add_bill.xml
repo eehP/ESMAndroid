@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="0.0€"
+        android:hint="0.00€"
         android:inputType="numberDecimal"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

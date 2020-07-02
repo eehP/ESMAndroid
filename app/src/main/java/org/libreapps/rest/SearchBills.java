@@ -61,7 +61,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
                 if (response.isSuccessful()) {
 
                     List<ProductJSON> productJSONS = response.body();
-                    adapter = new Adapter(productJSONS,recyclerViewClickInterface);
+                    adapter = new Adapter(productJSONS,SearchBills.this);
                     adapter.setData(productJSONS);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);

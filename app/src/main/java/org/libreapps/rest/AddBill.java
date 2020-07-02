@@ -132,10 +132,10 @@ public class AddBill extends AppCompatActivity {
         switch(m_type){
             case "Name":
             case "Nickname":
-                if(m_element.matches("[a-zA-z]{1}[a-zA-z_-]{0,23}[a-zA-Z]{0,1}")){
+                if(m_element.matches("[a-zA-Z]{1}[a-zA-Z_-]{0,23}[a-zA-Z]{0,1}")){
                     return true;
                 }else{
-                    returnAlerte("Name Error", "Le Nom/Prénom que vous avez saisie n'est pas valide : 1 à 25 caractères [A-Z] et - autorisés");
+                    returnAlerte("Name Error", "Le Nom/Prénom que vous avez saisi n'est pas valide, caractère spécial autorisé: '-'.");
                     throw new IllegalAccessException("Name Error");
                 }
 
@@ -147,7 +147,7 @@ public class AddBill extends AppCompatActivity {
                     Date date = sdf.parse(m_element);
                     return true;
                 }catch (ParseException e) {
-                    returnAlerte("Date Error", "La date que vous avez saisie n'est pas valide");
+                    returnAlerte("Date Error", "La date que vous avez saisie n'est pas valide.");
                     throw new IllegalAccessException("Date Error");
                 }
 
@@ -159,12 +159,12 @@ public class AddBill extends AppCompatActivity {
                         (!m_element.equals("0.00"))){
                     return true;
                 }else{
-                    returnAlerte("Price Error", "Le prix que vous avez saisie n'est pas valide : 0.01€ à 99999.99€");
+                    returnAlerte("Price Error", "Le prix que vous avez saisi n'est pas valide : 0.01€ à 99999.99€.");
                     throw new IllegalAccessException("Price Error");
                 }
 
             default:
-                System.out.println("RegexController : Type non définit");
+                System.out.println("RegexController : Type non défini");
                 return false;
         }
     }

@@ -25,6 +25,8 @@ import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
 
 public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
+    private String token = null;
+
     private RecyclerView recyclerView;
     private Adapter adapter;
 
@@ -67,6 +69,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SearchBills.this, SummaryBills.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -106,6 +109,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         intent.putExtra("name", bills.get(position).getName());
         intent.putExtra("type", bills.get(position).getType());
         intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }

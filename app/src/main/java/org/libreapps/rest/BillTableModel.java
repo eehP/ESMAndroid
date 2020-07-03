@@ -6,8 +6,9 @@ import java.util.concurrent.ExecutionException;
 
 public class BillTableModel {
 
-    private ArrayList<Bill> listBills = new ArrayList<Bill>();
+    private ArrayList<Bill> listBills = new ArrayList<>();
     private ConnectionRest connectionRest = null;
+    private String token = null;
 
     public BillTableModel() {
     }
@@ -30,16 +31,16 @@ public class BillTableModel {
     public ArrayList<Bill> refreshBills(){
         try{
             connectionRest = new ConnectionRest();
+            connectionRest.setToken(token);
             connectionRest.execute("GET");
             String listJsonObjs = (String) connectionRest.get();
             if(listJsonObjs != null) {
                 return connectionRest.parse(listJsonObjs);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return null;
     }
+    public void setToken(String monToken) {token = monToken; }
 }

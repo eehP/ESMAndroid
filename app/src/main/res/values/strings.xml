@@ -15,4 +15,8 @@
     <string name="type">Type Here</string>
     <string name="price">Price Here</string>
     <string name="search">Search</string>
+    <string name="login">LOGIN</string>
+    <string name="hint_password">Enter Password</string>
+    <string name="hint_username">Username</string>
+    <string name="logo">Logo</string>
 </resources>

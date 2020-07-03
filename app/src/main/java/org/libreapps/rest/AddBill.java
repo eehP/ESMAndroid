@@ -18,10 +18,13 @@ import java.util.Date;
 
 public class AddBill extends AppCompatActivity {
 
+    String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_bill);
+        token = getIntent().getStringExtra("token");
         final int id = getIntent().getIntExtra("id",0);
         String name = getIntent().getStringExtra("name");
         String type = getIntent().getStringExtra("type");
@@ -69,7 +72,9 @@ public class AddBill extends AppCompatActivity {
                     bill.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
                     bill.put("type", typeEditTxt.getText().toString());
                     bill.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
+                    connectionRest.setToken(token);
                     connectionRest.setJsonObj(bill);
+
 
                     if(id != 0){
                         connectionRest.execute("PUT");
@@ -78,11 +83,10 @@ public class AddBill extends AppCompatActivity {
                         connectionRest.execute("POST");
                     }
 
-                    Intent intent = new Intent(AddBill.this, SearchBills.class);
+                    Intent intent = new Intent(AddBill.this, SummaryBills.class);
+                    intent.putExtra("token", token);
                     startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (JSONException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
@@ -93,9 +97,11 @@ public class AddBill extends AppCompatActivity {
             public void onClick(View view) {
                 if (id == 0) {
                     Intent intent = new Intent(AddBill.this, MainActivity.class);
+                    intent.putExtra("token", token);
                     startActivity(intent);
                 }
                 Intent intent = new Intent(AddBill.this, SearchBills.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -110,15 +116,18 @@ public class AddBill extends AppCompatActivity {
                         JSONObject bill = new JSONObject();
                         bill.put("id", id);
                         connectionRest.setJsonObj(bill);
+                        connectionRest.setToken(token);
                         connectionRest.execute("DELETE");
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
                     Intent intent = new Intent(AddBill.this, SearchBills.class);
+                    intent.putExtra("token", token);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(AddBill.this, AddBill.class);
+                    intent.putExtra("token", token);
                     startActivity(intent);
                 }
             }

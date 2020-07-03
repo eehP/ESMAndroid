@@ -22,6 +22,7 @@ import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.BillJSON;
 import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
+import org.libreapps.rest.ViewSearch.RequestInterface;
 
 public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
@@ -36,6 +37,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
+        token = getIntent().getStringExtra("token");
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -43,7 +45,8 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(layoutManager);
 
-        Call<List<BillJSON>> billJSON = ApiClient.getRequestInterface().getBills();
+        RequestInterface service = ApiClient.ApiService(RequestInterface.class, token);
+        Call<List<BillJSON>> billJSON = service.getBills();
         billJSON.enqueue(new Callback<List<BillJSON>>() {
             @Override
             public void onResponse(Call<List<BillJSON>> call, Response<List<BillJSON>> response) {

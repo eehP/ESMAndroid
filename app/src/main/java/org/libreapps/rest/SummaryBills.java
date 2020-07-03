@@ -35,7 +35,7 @@ public class SummaryBills extends AppCompatActivity {
                 m_priceCompletion += " ";
             }
             String m_data = "\t\t" + bills[increment][2].toString() +
-                            "\n\n\t\t" + bills[increment][1].toString()  + m_priceCompletion + bills[increment][3].toString() + "€";
+                            "\n\n\t\t" + bills[increment][1].toString()  + m_priceCompletion + bills[increment][3].toString() + " €";
 
             TextView m_element = new TextView(this);
             m_element.setBackgroundResource(R.drawable.text_message_scroll);

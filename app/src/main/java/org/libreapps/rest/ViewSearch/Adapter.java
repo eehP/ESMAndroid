@@ -43,7 +43,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         String id = modelClassList.get(position).getId();
         String name = modelClassList.get(position).getName();
         String type = modelClassList.get(position).getType();
-        String price = modelClassList.get(position).getPrice();
+        double price = Double.parseDouble(modelClassList.get(position).getPrice());
         viewholder.id.setText(id);
         viewholder.name.setText(name);
         viewholder.type.setText(type);

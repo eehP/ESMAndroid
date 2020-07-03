@@ -91,7 +91,11 @@ public class AddBill extends AppCompatActivity {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddBill.this, MainActivity.class);
+                if (id == 0) {
+                    Intent intent = new Intent(AddBill.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                Intent intent = new Intent(AddBill.this, SearchBills.class);
                 startActivity(intent);
             }
         });
@@ -148,16 +152,15 @@ public class AddBill extends AppCompatActivity {
                 String[] m_priceElements = m_element.split("\\.");
                 if(m_priceElements.length == 2 &&
                         (m_priceElements[0].length() <=5 && m_priceElements[0].length() >0) &&
-                        (m_priceElements[1].length() == 2) &&
-                        (!m_element.equals("0.00"))){
+                        (m_priceElements[1].length() >= 1) &&
+                        (!m_element.equals("0.00") && !m_element.equals("0.0"))){
                     return true;
                 }else{
-                    returnAlert("Price Error", "Le prix que vous avez saisi n'est pas valide : 0.01€ à 99999.99€.");
+                    returnAlert("Price Error", "Le prix que vous avez saisi n'est pas valide : 0.1€ à 99999.99€.");
                     throw new IllegalAccessException("Price Error");
                 }
 
             default:
-                System.out.println("RegexController : Type non défini");
                 return false;
         }
     }

@@ -18,6 +18,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import org.jetbrains.annotations.NotNull;
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.BillJSON;
@@ -42,6 +44,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(layoutManager);
 
@@ -49,7 +52,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         Call<List<BillJSON>> billJSON = service.getBills();
         billJSON.enqueue(new Callback<List<BillJSON>>() {
             @Override
-            public void onResponse(Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
+            public void onResponse(@NotNull Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
 
                 if (response.isSuccessful()) {
 
@@ -62,8 +65,8 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
 
                 }
             }
-            public void onFailure(Call<List<BillJSON>> call, Throwable t) {
-                Log.e("failure", t.getLocalizedMessage());
+            public void onFailure(@NotNull Call<List<BillJSON>> call, @NotNull Throwable t) {
+                Log.v("Failure", t.getLocalizedMessage());
             }
         });
 

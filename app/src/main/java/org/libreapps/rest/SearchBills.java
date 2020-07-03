@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import android.widget.SearchView;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,15 +29,16 @@ import retrofit2.Response;
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.ProductJSON;
+import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
 
 
-
-public class SearchBills extends AppCompatActivity {
+public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private RecyclerView recyclerView;
     private Adapter adapter;
-    private Adapter.RecyclerViewListener listener;
-    private ArrayList<ProductJSON> test;
+
+    private List<ProductJSON> bills;
+    private RecyclerViewClickInterface recyclerViewClickInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +59,12 @@ public class SearchBills extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     List<ProductJSON> productJSONS = response.body();
-                    adapter = new Adapter(productJSONS, listener);
+                    adapter = new Adapter(productJSONS,SearchBills.this);
+                    bills = productJSONS;
                     adapter.setData(productJSONS);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
-                    setOnClickListener();
+
                 }
             }
             public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
@@ -72,17 +72,6 @@ public class SearchBills extends AppCompatActivity {
             }
         });
     }
-
-    private void setOnClickListener() {
-        listener = new Adapter.RecyclerViewListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent = new Intent(SearchBills.this, AddBill.class);
-                startActivity(intent);
-            }
-        };
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -109,5 +98,15 @@ public class SearchBills extends AppCompatActivity {
         });
         return true;
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(SearchBills.this, AddBill.class);
+        intent.putExtra("id", Integer.parseInt(bills.get(position).getId()));
+        intent.putExtra("name", bills.get(position).getName());
+        intent.putExtra("type", bills.get(position).getType());
+        intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
+        startActivity(intent);
     }
 }

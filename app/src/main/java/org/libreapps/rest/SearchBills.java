@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 
+import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,6 +70,15 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
             }
             public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
                 Log.e("failure", t.getLocalizedMessage());
+            }
+        });
+
+        Button buttonCancel = (Button) findViewById(R.id.button_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchBills.this, SummaryBills.class);
+                startActivity(intent);
             }
         });
     }

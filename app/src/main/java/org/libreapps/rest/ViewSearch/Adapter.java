@@ -52,7 +52,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         viewholder.id.setText(id);
         viewholder.name.setText(name);
         viewholder.type.setText(type);
-        viewholder.price.setText(price);
+        viewholder.price.setText(price+"€");
     }
 
     @Override

@@ -82,6 +82,8 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
+        MenuItem sortItem = menu.findItem(R.id.action_sort);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 

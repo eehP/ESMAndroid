@@ -9,5 +9,9 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView"
         android:title="@string/search" />
-
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@mipmap/ic_sort"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/sort" />
 </menu>

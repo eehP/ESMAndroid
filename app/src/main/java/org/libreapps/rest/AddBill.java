@@ -2,7 +2,6 @@ package org.libreapps.rest;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,17 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.invoke.MethodHandles;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class AddBill extends AppCompatActivity {
 
@@ -62,21 +56,20 @@ public class AddBill extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     ConnectionRest connectionRest = new ConnectionRest();
-                    JSONObject product = new JSONObject();
+                    JSONObject bill = new JSONObject();
                     if(id != 0){
-                        product.put("id", id);
+                        bill.put("id", id);
                     }
 
-                    //Input control
                     regexControl(nameEditTxt.getText().toString(), "Name");
                     regexControl(nicknameEditTxt.getText().toString(), "Nickname");
                     regexControl(typeEditTxt.getText().toString(), "Date");
                     regexControl(priceEditTxt.getText().toString(), "Price");
 
-                    product.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
-                    product.put("type", typeEditTxt.getText().toString());
-                    product.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
-                    connectionRest.setJsonObj(product);
+                    bill.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
+                    bill.put("type", typeEditTxt.getText().toString());
+                    bill.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
+                    connectionRest.setJsonObj(bill);
 
                     if(id != 0){
                         connectionRest.execute("PUT");
@@ -110,9 +103,9 @@ public class AddBill extends AppCompatActivity {
                 if(id != 0) {
                     try {
                         ConnectionRest connectionRest = new ConnectionRest();
-                        JSONObject product = new JSONObject();
-                        product.put("id", id);
-                        connectionRest.setJsonObj(product);
+                        JSONObject bill = new JSONObject();
+                        bill.put("id", id);
+                        connectionRest.setJsonObj(bill);
                         connectionRest.execute("DELETE");
                     }
                     catch (JSONException e) {
@@ -135,7 +128,7 @@ public class AddBill extends AppCompatActivity {
                 if(m_element.matches("[a-zA-Z]{1}[a-zA-Z_-]{0,23}[a-zA-Z]{0,1}")){
                     return true;
                 }else{
-                    returnAlerte("Name Error", "Le Nom/Prénom que vous avez saisi n'est pas valide, caractère spécial autorisé: '-'.");
+                    returnAlert("Name Error", "Le Nom/Prénom que vous avez saisi n'est pas valide, caractère spécial autorisé: '-'.");
                     throw new IllegalAccessException("Name Error");
                 }
 
@@ -144,10 +137,10 @@ public class AddBill extends AppCompatActivity {
 
                 sdf.setLenient(false);
                 try {
-                    Date date = sdf.parse(m_element);
+                    sdf.parse(m_element);
                     return true;
                 }catch (ParseException e) {
-                    returnAlerte("Date Error", "La date que vous avez saisie n'est pas valide.");
+                    returnAlert("Date Error", "La date que vous avez saisie n'est pas valide.");
                     throw new IllegalAccessException("Date Error");
                 }
 
@@ -159,7 +152,7 @@ public class AddBill extends AppCompatActivity {
                         (!m_element.equals("0.00"))){
                     return true;
                 }else{
-                    returnAlerte("Price Error", "Le prix que vous avez saisi n'est pas valide : 0.01€ à 99999.99€.");
+                    returnAlert("Price Error", "Le prix que vous avez saisi n'est pas valide : 0.01€ à 99999.99€.");
                     throw new IllegalAccessException("Price Error");
                 }
 
@@ -169,7 +162,7 @@ public class AddBill extends AppCompatActivity {
         }
     }
 
-    private void returnAlerte(String title, String message){
+    private void returnAlert(String title, String message){
 
         LayoutInflater factory = LayoutInflater.from(this);
         View my_layout = factory.inflate(R.layout.alert_box, null);

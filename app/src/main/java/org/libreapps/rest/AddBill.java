@@ -129,7 +129,7 @@ public class AddBill extends AppCompatActivity {
         switch(m_type){
             case "Name":
             case "Nickname":
-                if(m_element.matches("[a-zA-Z]{1}[a-zA-Z_-]{0,23}[a-zA-Z]{0,1}")){
+                if(m_element.matches("[a-zA-ZÉ]{1}[a-zA-Z_-éèê]{0,23}[a-zA-Zéèê]{0,1}")){
                     return true;
                 }else{
                     returnAlert("Name Error", "Le Nom/Prénom que vous avez saisi n'est pas valide, caractère spécial autorisé: '-'.");
@@ -141,6 +141,11 @@ public class AddBill extends AppCompatActivity {
 
                 sdf.setLenient(false);
                 try {
+                    String[] m_splitElement = m_element.split("/");
+                    if(m_splitElement[1].length() != 2 || m_splitElement[2].length() != 4){
+                        returnAlert("Date Error", "La date que vous avez saisie n'est pas valide.");
+                        throw new IllegalAccessException("Date Error");
+                    }
                     sdf.parse(m_element);
                     return true;
                 }catch (ParseException e) {

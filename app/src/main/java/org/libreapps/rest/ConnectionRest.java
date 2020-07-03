@@ -2,12 +2,10 @@ package org.libreapps.rest;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.libreapps.rest.obj.ProductJSON;
-
+import org.libreapps.rest.obj.Bill;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,26 +17,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class ConnectionRest extends AsyncTask {
-    private final static String URL = "https://api.munier.me/eb/product/";
+    private final static String URL = "https://api.munier.me/eb/bills/";
     private JSONObject jsonObj = null;
 
     protected String doInBackground(Object[] strings) {
         try {
-            // GET / POST (ADD) / PUT (UPD) / DELETE
-            //jsonObj = new JSONObject();
-            //jsonObj.put("id",1);
-            //jsonObj.put("name","Pomme de terre");
-            //jsonObj.put("type","Legume");
-            //jsonObj.put("price",3.2);
-
-            //Log.v("RETOUR ", get("POST"));
-            //Log.v("RETOUR ", get("PUT"));
-            //Log.v("RETOUR ", get("DELETE"));
-
-            /*List<Product> listProduct = parse(get("GET"));
-            for (int i=0;i<listProduct.size();i++){
-                Log.v("PRODUIT ", listProduct.get(i).getName()+" "+listProduct.get(i).getType()+" "+listProduct.get(i).getPrice()+"\n");
-            }*/
             return get(strings[0].toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,12 +50,11 @@ public class ConnectionRest extends AsyncTask {
             final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setRequestMethod(methode);
 
-            // Pour les methode POST et PUT on envoie les parametre avec l'OutputStreamWriter
             if(methode.equals("POST")||methode.equals("PUT")){
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
                 OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-                out.write(parameters);// here i sent the parameter
+                out.write(parameters);
                 out.close();
             }else{
                 conn.setDoInput(true);
@@ -80,10 +62,8 @@ public class ConnectionRest extends AsyncTask {
             }
 
             is = conn.getInputStream();
-            // Lit le InputStream et l'enregistre dans une string
             return readIt(is);
         } finally {
-            // Pour etre sur que le InputStream soit ferme apres avoir quitter l'application
             if (is != null) {
                 is.close();
             }
@@ -100,14 +80,14 @@ public class ConnectionRest extends AsyncTask {
         return response.toString();
     }
 
-    public ArrayList<ProductJSON> parse(final String json) {
+    public ArrayList<Bill> parse(final String json) {
         try {
-            final ArrayList products = new ArrayList<>();
-            final JSONArray jProductArray = new JSONArray(json);
-            for (int i = 0; i < jProductArray.length(); i++) {
-                products.add(new ProductJSON(jProductArray.optJSONObject(i)));
+            final ArrayList bills = new ArrayList<>();
+            final JSONArray jBillArray = new JSONArray(json);
+            for (int i = 0; i < jBillArray.length(); i++) {
+                bills.add(new Bill(jBillArray.optJSONObject(i)));
             }
-            return products;
+            return bills;
         } catch (JSONException e) {
             Log.v("TAG","[JSONException] e : " + e.getMessage());
         }
@@ -117,10 +97,5 @@ public class ConnectionRest extends AsyncTask {
     public void setJsonObj(JSONObject jsonObj){
         this.jsonObj = jsonObj;
     }
-
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-    }
-
 
 }

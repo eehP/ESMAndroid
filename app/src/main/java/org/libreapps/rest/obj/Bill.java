@@ -1,13 +1,13 @@
 package org.libreapps.rest.obj;
 import org.json.JSONObject;
 
-public class ProductJSON {
+public class Bill {
     private final int id;
     private final String name;
     private final String type;
     private final double price;
-    public ProductJSON(JSONObject jObject) {
-        this.id =jObject.optInt("id");
+    public Bill(JSONObject jObject) {
+        this.id = jObject.optInt("id");
         this.name = jObject.optString("name");
         this.type = jObject.optString("type");
         this.price = jObject.optDouble("price");

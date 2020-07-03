@@ -1,10 +1,8 @@
 package org.libreapps.rest.ViewSearch;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
-public class ProductJSON implements Serializable {
+public class BillJSON implements Serializable {
 
     String id;
 
@@ -14,7 +12,7 @@ public class ProductJSON implements Serializable {
 
     String price;
 
-    public ProductJSON(String id, String name, String type, String price) {
+    public BillJSON(String id, String name, String type, String price) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -31,7 +29,7 @@ public class ProductJSON implements Serializable {
 
     @Override
     public String toString() {
-        return "ProductJSON{" +
+        return "BillJSON{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +

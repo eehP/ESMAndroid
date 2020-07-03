@@ -1,46 +1,34 @@
 package org.libreapps.rest;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-
 import android.widget.Button;
 import android.widget.SearchView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
-import org.libreapps.rest.ViewSearch.ProductJSON;
+import org.libreapps.rest.ViewSearch.BillJSON;
 import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
-
 
 public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private RecyclerView recyclerView;
     private Adapter adapter;
 
-    private List<ProductJSON> bills;
-    private RecyclerViewClickInterface recyclerViewClickInterface;
+    private List<BillJSON> bills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +41,23 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(layoutManager);
 
-        Call<List<ProductJSON>> productJSON = ApiClient.getRequestInterface().getProducts();
-        productJSON.enqueue(new Callback<List<ProductJSON>>() {
+        Call<List<BillJSON>> billJSON = ApiClient.getRequestInterface().getBills();
+        billJSON.enqueue(new Callback<List<BillJSON>>() {
             @Override
-            public void onResponse(Call<List<ProductJSON>> call, Response<List<ProductJSON>> response) {
+            public void onResponse(Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
 
                 if (response.isSuccessful()) {
 
-                    List<ProductJSON> productJSONS = response.body();
-                    adapter = new Adapter(productJSONS,SearchBills.this);
-                    bills = productJSONS;
-                    adapter.setData(productJSONS);
+                    List<BillJSON> billJSONS = response.body();
+                    adapter = new Adapter(billJSONS,SearchBills.this);
+                    bills = billJSONS;
+                    adapter.setData(billJSONS);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
 
                 }
             }
-            public void onFailure(Call<List<ProductJSON>> call, Throwable t) {
+            public void onFailure(Call<List<BillJSON>> call, Throwable t) {
                 Log.e("failure", t.getLocalizedMessage());
             }
         });

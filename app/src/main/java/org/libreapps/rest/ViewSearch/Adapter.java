@@ -6,31 +6,26 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.libreapps.rest.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Callback;
-
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
-    private List<ProductJSON> modelClassList;
-    private List<ProductJSON> modelClassListFull;
+    private List<BillJSON> modelClassList;
+    private List<BillJSON> modelClassListFull;
     private RecyclerViewClickInterface recyclerViewClickInterface;
 
 
-    public Adapter(List<ProductJSON> modelClassList, RecyclerViewClickInterface recyclerViewClickInterface) {
+    public Adapter(List<BillJSON> modelClassList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.modelClassList = modelClassList;
         modelClassListFull = new ArrayList<>(modelClassList);
         this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
-    public void setData(List<ProductJSON> modelClassList) {
+    public void setData(List<BillJSON> modelClassList) {
         this.modelClassList = modelClassList;
     }
 
@@ -48,11 +43,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         String id = modelClassList.get(position).getId();
         String name = modelClassList.get(position).getName();
         String type = modelClassList.get(position).getType();
-        String price = modelClassList.get(position).getPrice();
+        double price = Double.parseDouble(modelClassList.get(position).getPrice());
         viewholder.id.setText(id);
         viewholder.name.setText(name);
         viewholder.type.setText(type);
-        viewholder.price.setText(price+"€");
+        viewholder.price.setText(price+" €");
     }
 
     @Override
@@ -68,16 +63,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private Filter modelClassFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<ProductJSON> filteredList = new ArrayList<>();
+            List<BillJSON> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(modelClassListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (ProductJSON product : modelClassListFull) {
-                    if (product.getId().toLowerCase().contains(filterPattern) || product.getName().toLowerCase().contains(filterPattern) || product.getType().toLowerCase().contains(filterPattern) || product.getPrice().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(product);
+                for (BillJSON bill : modelClassListFull) {
+                    if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getType().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(bill);
                     }
                 }
             }

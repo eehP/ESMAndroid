@@ -151,6 +151,9 @@ public class AddBill extends AppCompatActivity {
                 }catch (ParseException e) {
                     returnAlert("Date Error", "La date que vous avez saisie n'est pas valide.");
                     throw new IllegalAccessException("Date Error");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    returnAlert("Date Error", "La date que vous avez saisie n'est pas valide.");
+                    throw new IllegalAccessException("Date Error");
                 }
 
             case "Price":

@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AddBill extends AppCompatActivity {
 
@@ -27,12 +26,14 @@ public class AddBill extends AppCompatActivity {
         token = getIntent().getStringExtra("token");
         final int id = getIntent().getIntExtra("id",0);
         String name = getIntent().getStringExtra("name");
+        String date = getIntent().getStringExtra("date");
         String type = getIntent().getStringExtra("type");
         Double price = getIntent().getDoubleExtra("price",1.0);
 
         final EditText nameEditTxt = (EditText) findViewById(R.id.nameEditTxt);
         final EditText nicknameEditTxt = (EditText) findViewById(R.id.nameEditTxt2);
-        final EditText typeEditTxt = (EditText) findViewById(R.id.editTextDate);
+        final EditText dateEditTxt = (EditText) findViewById(R.id.editTextDate);
+        final EditText typeEditTxt = (EditText) findViewById(R.id.editTextType);
         final EditText priceEditTxt = (EditText) findViewById(R.id.priceEditTxt);
 
         Button buttonOk = (Button) findViewById(R.id.button_ok);
@@ -48,6 +49,7 @@ public class AddBill extends AppCompatActivity {
 
             nameEditTxt.setText(lastName);
             nicknameEditTxt.setText(firstName);
+            dateEditTxt.setText(date);
             typeEditTxt.setText(type);
             priceEditTxt.setText("" + price);
             buttonOk.setText("Modifier");
@@ -66,10 +68,12 @@ public class AddBill extends AppCompatActivity {
 
                     regexControl(nameEditTxt.getText().toString(), "Name");
                     regexControl(nicknameEditTxt.getText().toString(), "Nickname");
-                    regexControl(typeEditTxt.getText().toString(), "Date");
+                    regexControl(dateEditTxt.getText().toString(), "Date");
+                    regexControl(typeEditTxt.getText().toString(), "Type");
                     regexControl(priceEditTxt.getText().toString(), "Price");
 
                     bill.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
+                    bill.put("date", dateEditTxt.getText().toString());
                     bill.put("type", typeEditTxt.getText().toString());
                     bill.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
                     connectionRest.setToken(token);
@@ -165,7 +169,13 @@ public class AddBill extends AppCompatActivity {
                     returnAlert("Date Error", "La date que vous avez saisie n'est pas valide.");
                     throw new IllegalAccessException("Date Error");
                 }
-
+            case "Type":
+                if(m_element.matches("")) {
+                    returnAlert("Type Error", "Le type n'est pas renseigné.");
+                    throw new IllegalAccessException("Type Error");
+                } else {
+                    return true;
+                }
             case "Price":
                 String[] m_priceElements = m_element.split("\\.");
                 if(m_priceElements.length == 2 &&

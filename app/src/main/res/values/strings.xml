@@ -12,6 +12,7 @@
     <string name="query_hint">Search Here</string>
     <string name="id">Id Here</string>
     <string name="name">Name Here</string>
+    <string name="date">Date Here</string>
     <string name="type">Type Here</string>
     <string name="price">Price Here</string>
     <string name="search">Search</string>

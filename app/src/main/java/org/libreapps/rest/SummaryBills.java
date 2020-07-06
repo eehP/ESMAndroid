@@ -31,12 +31,12 @@ public class SummaryBills extends AppCompatActivity {
         params.setMargins(60,25,5,25);
 
         for(int increment = bills.length-1; increment >= 0 && increment >= (bills.length - 10); increment--){
-            String m_priceCompletion = "";
+            String m_completion = "";
             for(int completedSize = 0; completedSize < (40 - bills[increment][3].length() - bills[increment][1].length()); completedSize++){
-                m_priceCompletion += " ";
+                m_completion += " ";
             }
-            String m_data = "\t\t" + bills[increment][2].toString() +
-                            "\n\n\t\t" + bills[increment][1].toString()  + m_priceCompletion + bills[increment][3].toString() + " €";
+            String m_data = "\t\t" + bills[increment][2].toString() + m_completion + bills[increment][4].toString() +
+                            "\n\n\t\t" + bills[increment][1].toString()  + m_completion + bills[increment][3].toString() + " €";
 
             TextView m_element = new TextView(this);
             m_element.setBackgroundResource(R.drawable.text_message_scroll);

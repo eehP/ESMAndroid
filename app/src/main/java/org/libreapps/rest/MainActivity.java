@@ -7,17 +7,20 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    private String token = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        token = getIntent().getStringExtra("token");
 
         Button add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddBill.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SummaryBills.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });

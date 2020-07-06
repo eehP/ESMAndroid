@@ -6,6 +6,6 @@ import retrofit2.http.GET;
 
 public interface RequestInterface {
 
-    @GET("eb/bills")
+    @GET("bills")
     Call<List<BillJSON>> getBills();
 }

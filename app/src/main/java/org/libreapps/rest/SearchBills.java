@@ -2,7 +2,6 @@ package org.libreapps.rest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,33 +17,38 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import org.jetbrains.annotations.NotNull;
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
 import org.libreapps.rest.ViewSearch.BillJSON;
 import org.libreapps.rest.ViewSearch.RecyclerViewClickInterface;
+import org.libreapps.rest.ViewSearch.RequestInterface;
 
 public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
+    private String token = null;
     private RecyclerView recyclerView;
     private Adapter adapter;
-
     private List<BillJSON> bills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_bills);
+        token = getIntent().getStringExtra("token");
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(layoutManager);
 
-        Call<List<BillJSON>> billJSON = ApiClient.getRequestInterface().getBills();
+        RequestInterface service = ApiClient.ApiService(RequestInterface.class, token);
+        Call<List<BillJSON>> billJSON = service.getBills();
         billJSON.enqueue(new Callback<List<BillJSON>>() {
             @Override
-            public void onResponse(Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
+            public void onResponse(@NotNull Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
 
                 if (response.isSuccessful()) {
 
@@ -57,8 +61,8 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
 
                 }
             }
-            public void onFailure(Call<List<BillJSON>> call, Throwable t) {
-                Log.e("failure", t.getLocalizedMessage());
+            public void onFailure(@NotNull Call<List<BillJSON>> call, @NotNull Throwable t) {
+                // No action
             }
         });
 
@@ -67,6 +71,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SearchBills.this, SummaryBills.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -106,6 +111,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         intent.putExtra("name", bills.get(position).getName());
         intent.putExtra("type", bills.get(position).getType());
         intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }

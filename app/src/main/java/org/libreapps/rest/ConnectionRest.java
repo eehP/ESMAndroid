@@ -14,29 +14,32 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.spi.CharsetProvider;
 import java.util.ArrayList;
 
+import okio.Utf8;
+
 public class ConnectionRest extends AsyncTask {
-    private final static String URL = "https://api.munier.me/eb/bills/";
+    private final static String URL = "https://api.munier.me/jwt/";
     private JSONObject jsonObj = null;
+    String action = "bills", token;
 
     protected String doInBackground(Object[] strings) {
         try {
             return get(strings[0].toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public String get(String methode) throws IOException, JSONException {
-        String url = URL;
+        String url = URL + action + "/";
         InputStream is = null;
         String parameters = "";
-        Log.v("methode", methode);
-        if(!methode.equals("POST")&&(jsonObj!=null)){
+
+        if(!methode.equals("POST")&&(jsonObj!=null)&&!methode.equals("CREATE_USER")){
             url += jsonObj.getInt("id");
         }
         if(jsonObj != null){
@@ -44,11 +47,19 @@ public class ConnectionRest extends AsyncTask {
                 jsonObj.remove("id");
             }
             parameters  = "data="+ URLEncoder.encode(jsonObj.toString(), "utf-8");
-            Log.v("URL", url+" "+parameters);
         }
+        if (methode.equals("CREATE_USER")) {
+            methode = "POST";
+            url = URL + "register.php";
+        }
+
         try {
             final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setRequestMethod(methode);
+
+            if (token != null) {
+                conn.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
+            }
 
             if(methode.equals("POST")||methode.equals("PUT")){
                 conn.setDoInput(true);
@@ -89,13 +100,11 @@ public class ConnectionRest extends AsyncTask {
             }
             return bills;
         } catch (JSONException e) {
-            Log.v("TAG","[JSONException] e : " + e.getMessage());
         }
         return null;
     }
 
-    public void setJsonObj(JSONObject jsonObj){
-        this.jsonObj = jsonObj;
-    }
-
+    public void setJsonObj(JSONObject jsonObj){ this.jsonObj = jsonObj; }
+    public void setAction(String monAction) { this.action = monAction; }
+    public void setToken(String monToken){ this.token = monToken; }
 }

@@ -8,18 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import de.codecrafters.tableview.TableView;
 
 public class SummaryBills extends AppCompatActivity {
 
+    private String token = null;
     BillTableModel tableModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bill_summary);
-
+        token = getIntent().getStringExtra("token");
         tableModel = new BillTableModel();
+        tableModel.setToken(token);
         String[][] bills = tableModel.getBills();
 
         setContentView(R.layout.bill_summary);
@@ -52,6 +53,7 @@ public class SummaryBills extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SummaryBills.this, SearchBills.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });
@@ -61,6 +63,7 @@ public class SummaryBills extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SummaryBills.this, MainActivity.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });

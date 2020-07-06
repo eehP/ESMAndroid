@@ -73,7 +73,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (BillJSON bill : modelClassListFull) {
-                    if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getDate().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {
+                    if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getType().toLowerCase().contains(filterPattern) || bill.getDate().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {
                         filteredList.add(bill);
                     }
                 }

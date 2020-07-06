@@ -1,23 +1,22 @@
 package org.libreapps.rest;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.concurrent.ExecutionException;
+import static android.widget.Toast.LENGTH_LONG;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText userName, userPassword, userEmail;
     private Button buttonRegistration;
+    private String error = "Email non valide.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +42,20 @@ public class RegistrationActivity extends AppCompatActivity {
                     connectionRest.execute("CREATE_USER");
                     String token = (String) connectionRest.get();
 
-                    if(token.charAt(0)=='{') {
-                        Log.v("LoginActivity", token);
-                    }else {
+                    if(token.charAt(0) != '{') {
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.putExtra("token", token);
                         startActivity(intent);
+                    } else {
+                        throw new InterruptedException();
                     }
+
+
                 } catch (JSONException e1) {
                     Log.v("TAG", "[JSONException] e : " + e1.getMessage());
                 } catch (InterruptedException | ExecutionException e) {
+                    Toast toast = new Toast();
+                    toast.showToast(getApplicationContext(), error, LENGTH_LONG);
                     e.printStackTrace();
                 }
             }

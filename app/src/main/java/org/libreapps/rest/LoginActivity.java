@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("token", token);
                         startActivity(intent);
                     } else {
-                        Log.v("LoginActivity", token);
                         throw new InterruptedException();
                     }
 

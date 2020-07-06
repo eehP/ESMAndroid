@@ -83,7 +83,7 @@ public class AddBill extends AppCompatActivity {
                         connectionRest.execute("POST");
                     }
 
-                    Intent intent = new Intent(AddBill.this, SummaryBills.class);
+                    Intent intent = new Intent(AddBill.this, SearchBills.class);
                     intent.putExtra("token", token);
                     startActivity(intent);
                 } catch (JSONException | IllegalAccessException e) {
@@ -99,10 +99,11 @@ public class AddBill extends AppCompatActivity {
                     Intent intent = new Intent(AddBill.this, MainActivity.class);
                     intent.putExtra("token", token);
                     startActivity(intent);
+                } else {
+                    Intent intent = new Intent(AddBill.this, SearchBills.class);
+                    intent.putExtra("token", token);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(AddBill.this, SearchBills.class);
-                intent.putExtra("token", token);
-                startActivity(intent);
             }
         });
 

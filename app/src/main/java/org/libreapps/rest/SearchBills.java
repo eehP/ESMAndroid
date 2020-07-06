@@ -2,7 +2,6 @@ package org.libreapps.rest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import org.jetbrains.annotations.NotNull;
 import org.libreapps.rest.ViewSearch.Adapter;
 import org.libreapps.rest.ViewSearch.ApiClient;
@@ -29,10 +27,8 @@ import org.libreapps.rest.ViewSearch.RequestInterface;
 public class SearchBills extends AppCompatActivity implements RecyclerViewClickInterface {
 
     private String token = null;
-
     private RecyclerView recyclerView;
     private Adapter adapter;
-
     private List<BillJSON> bills;
 
     @Override
@@ -66,7 +62,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
                 }
             }
             public void onFailure(@NotNull Call<List<BillJSON>> call, @NotNull Throwable t) {
-                Log.v("Failure", t.getLocalizedMessage());
+                // No action
             }
         });
 

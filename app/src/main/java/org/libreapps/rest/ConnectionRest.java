@@ -38,9 +38,6 @@ public class ConnectionRest extends AsyncTask {
         String url = URL + action + "/";
         InputStream is = null;
         String parameters = "";
-        Log.v("methode", methode);
-        //if(!methode.equals("POST")&&(jsonObj!=null)){
-        //  url += jsonObj.getInt("id");
 
         if(!methode.equals("POST")&&(jsonObj!=null)&&!methode.equals("CREATE_USER")){
             url += jsonObj.getInt("id");
@@ -50,7 +47,6 @@ public class ConnectionRest extends AsyncTask {
                 jsonObj.remove("id");
             }
             parameters  = "data="+ URLEncoder.encode(jsonObj.toString(), "utf-8");
-            Log.v("URL", url+" "+parameters);
         }
         if (methode.equals("CREATE_USER")) {
             methode = "POST";
@@ -60,7 +56,6 @@ public class ConnectionRest extends AsyncTask {
         try {
             final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setRequestMethod(methode);
-            Log.v("TOKEN", token+" ");
 
             if (token != null) {
                 conn.setRequestProperty("Authorization", "Bearer " + URLEncoder.encode(token, "utf-8"));
@@ -105,7 +100,6 @@ public class ConnectionRest extends AsyncTask {
             }
             return bills;
         } catch (JSONException e) {
-            Log.v("TAG","[JSONException] e : " + e.getMessage());
         }
         return null;
     }

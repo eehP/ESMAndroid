@@ -2,7 +2,6 @@ package org.libreapps.rest.ViewSearch;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

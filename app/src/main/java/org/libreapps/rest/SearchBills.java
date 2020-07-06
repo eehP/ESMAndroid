@@ -30,6 +30,9 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
     private RecyclerView recyclerView;
     private Adapter adapter;
     private List<BillJSON> bills;
+    private String m_sortStatus = "";
+    private SortByColumn m_sort = new SortByColumn();
+    private SortByColumn m_sorter = new SortByColumn();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         recyclerView.setLayoutManager(layoutManager);
 
         RequestInterface service = ApiClient.ApiService(RequestInterface.class, token);
-        Call<List<BillJSON>> billJSON = service.getBills();
+        final Call<List<BillJSON>> billJSON = service.getBills();
         billJSON.enqueue(new Callback<List<BillJSON>>() {
             @Override
             public void onResponse(@NotNull Call<List<BillJSON>> call, Response<List<BillJSON>> response) {
@@ -55,7 +58,9 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
                     List<BillJSON> billJSONS = response.body();
                     adapter = new Adapter(billJSONS,SearchBills.this);
                     bills = billJSONS;
-                    adapter.setData(billJSONS);
+                    //AP:current
+                    bills = m_sorter.sortTable(billJSONS, "Price");
+                    adapter.setData(bills);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
 
@@ -83,6 +88,15 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         inflater.inflate(R.menu.menu_search, menu);
 
         MenuItem sortItem = menu.findItem(R.id.action_sort);
+
+        sortItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                System.out.println("************Name************");
+                m_sortStatus = "Name";
+                return false;
+            }
+        });
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();

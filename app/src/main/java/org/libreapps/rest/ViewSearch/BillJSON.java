@@ -18,15 +18,15 @@ public class BillJSON implements Serializable {
         this.price = price;
     }
 
-    public String getId() { return id; }
+    public String getId() { return this.id; }
 
-    public String getName() { return name; }
+    public String getName() { return this.name; }
 
-    public String getDate() { return date; }
+    public String getDate() { return this.date; }
 
-    public String getType() { return type; }
+    public String getType() { return this.type; }
 
-    public String getPrice() { return price; }
+    public String getPrice() { return this.price; }
 
     @Override
     public String toString() {

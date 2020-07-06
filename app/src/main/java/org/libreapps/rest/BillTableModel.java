@@ -16,17 +16,18 @@ public class BillTableModel {
         listBills = refreshBills();
         Bill obj;
         if(listBills != null) {
-            String[][] bills = new String[listBills.size()][4];
+            String[][] bills = new String[listBills.size()][5];
             for (int i = 0; i < listBills.size(); i++) {
                 obj = listBills.get(i);
                 bills[i][0] = "" + obj.getId();
-                bills[i][1] = obj.getType();
+                bills[i][1] = obj.getDate();
                 bills[i][2] = obj.getName();
                 bills[i][3] = "" + obj.getPrice();
+                bills[i][4] = obj.getType();
             }
             return bills;
         }
-        return new String[0][4];
+        return new String[0][5];
     }
     public ArrayList<Bill> refreshBills(){
         try{

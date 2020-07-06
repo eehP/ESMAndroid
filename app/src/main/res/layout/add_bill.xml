@@ -47,7 +47,7 @@
         android:id="@+id/button_delete"
         android:layout_width="141dp"
         android:layout_height="44dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="76dp"
         android:background="@drawable/btn_classic"
         android:text="Annuler"
         android:textColor="#FFFFFF"
@@ -60,7 +60,7 @@
         android:id="@+id/button_ok"
         android:layout_width="141dp"
         android:layout_height="44dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="76dp"
         android:background="@drawable/btn_classic"
         android:text="Créer"
         android:textColor="#FFFFFF"
@@ -104,7 +104,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextType" />
 
     <TextView
         android:id="@+id/textview_price"
@@ -119,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textview_type" />
 
     <TextView
-        android:id="@+id/textview_type"
+        android:id="@+id/textview_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -141,6 +141,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/nameEditTxt2" />
+
+    <TextView
+        android:id="@+id/textview_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="48dp"
+        android:text="Type :"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_date" />
+
+        <EditText
+        android:id="@+id/editTextType"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Type"
+        android:inputType="textAutoComplete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -42,10 +42,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
         String id = modelClassList.get(position).getId();
         String name = modelClassList.get(position).getName();
+        String date = modelClassList.get(position).getDate();
         String type = modelClassList.get(position).getType();
         double price = Double.parseDouble(modelClassList.get(position).getPrice());
         viewholder.id.setText(id);
         viewholder.name.setText(name);
+        viewholder.date.setText(date);
         viewholder.type.setText(type);
         viewholder.price.setText(price+" €");
     }
@@ -71,7 +73,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (BillJSON bill : modelClassListFull) {
-                    if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getType().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {
+                    if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getDate().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {
                         filteredList.add(bill);
                     }
                 }
@@ -92,13 +94,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     };
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView id, name, type, price;
+        private TextView id, name, date, type, price;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             id = itemView.findViewById(R.id.textId);
             name = itemView.findViewById(R.id.textName);
+            date = itemView.findViewById(R.id.textDate);
             type = itemView.findViewById(R.id.textType);
             price = itemView.findViewById(R.id.textPrice);
 

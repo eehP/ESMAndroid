@@ -5,16 +5,15 @@ import java.io.Serializable;
 public class BillJSON implements Serializable {
 
     String id;
-
     String name;
-
+    String date;
     String type;
-
     String price;
 
-    public BillJSON(String id, String name, String type, String price) {
+    public BillJSON(String id, String name, String date, String type, String price) {
         this.id = id;
         this.name = name;
+        this.date = date;
         this.type = type;
         this.price = price;
     }
@@ -22,6 +21,8 @@ public class BillJSON implements Serializable {
     public String getId() { return id; }
 
     public String getName() { return name; }
+
+    public String getDate() { return date; }
 
     public String getType() { return type; }
 
@@ -32,6 +33,7 @@ public class BillJSON implements Serializable {
         return "BillJSON{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
                 ", type='" + type + '\'' +
                 ", price='" + price + '\'' +
                 '}';

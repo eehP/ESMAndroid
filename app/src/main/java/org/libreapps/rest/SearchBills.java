@@ -109,6 +109,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         Intent intent = new Intent(SearchBills.this, AddBill.class);
         intent.putExtra("id", Integer.parseInt(bills.get(position).getId()));
         intent.putExtra("name", bills.get(position).getName());
+        intent.putExtra("date", bills.get(position).getDate());
         intent.putExtra("type", bills.get(position).getType());
         intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
         intent.putExtra("token", token);

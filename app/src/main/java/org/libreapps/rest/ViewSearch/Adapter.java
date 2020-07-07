@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import org.libreapps.rest.SortByColumn;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import org.libreapps.rest.R;
@@ -19,14 +18,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     private List<BillJSON> modelClassList;
     private List<BillJSON> modelClassListFull;
     private RecyclerViewClickInterface recyclerViewClickInterface;
-    private SortByColumn m_sorter;
 
 
     public Adapter(List<BillJSON> modelClassList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.modelClassList = modelClassList;
         modelClassListFull = new ArrayList<>(modelClassList);
         this.recyclerViewClickInterface = recyclerViewClickInterface;
-        this.m_sorter = new SortByColumn();
     }
 
     public void setData(List<BillJSON> modelClassList) {
@@ -61,14 +58,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
         return modelClassList.size();
     }
 
+    public List<BillJSON> get_actualList(){
+        return this.modelClassList;
+    }
+
     @Override
     public Filter getFilter() {
         return modelClassFilter;
     }
 
     private Filter modelClassFilter = new Filter() {
-        private String m_filter = "";
-        private SortByColumn m_sorter = new SortByColumn();
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -78,9 +77,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
                 filteredList.addAll(modelClassListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
-                //AP:current
-                modelClassListFull = this.m_sorter.sortTable(modelClassListFull, "Name");
 
                 for (BillJSON bill : modelClassListFull) {
                     if (bill.getId().toLowerCase().contains(filterPattern) || bill.getName().toLowerCase().contains(filterPattern) || bill.getType().toLowerCase().contains(filterPattern) || bill.getDate().toLowerCase().contains(filterPattern) || bill.getPrice().toLowerCase().contains(filterPattern)) {

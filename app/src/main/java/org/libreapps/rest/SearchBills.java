@@ -58,9 +58,9 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
                     List<BillJSON> billJSONS = response.body();
                     adapter = new Adapter(billJSONS,SearchBills.this);
                     bills = billJSONS;
-                    //AP:current
-                    bills = m_sorter.sortTable(billJSONS, "Price");
-                    adapter.setData(bills);
+                    List<BillJSON> m_bills;
+                    m_bills = m_sorter.sortTable(bills, m_sortStatus);
+                    adapter.setData(m_bills);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
 
@@ -92,8 +92,14 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         sortItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                System.out.println("************Name************");
-                m_sortStatus = "Name";
+                if(m_sortStatus != "Name"){
+                    m_sortStatus = "Name";
+                    List<BillJSON> m_bills = adapter.get_actualList();
+                    m_bills = m_sorter.sortTable(m_bills, m_sortStatus);
+                    adapter.setData(m_bills);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                }
                 return false;
             }
         });
@@ -112,6 +118,7 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                m_sortStatus = "";
                 adapter.getFilter().filter(newText);
                 return false;
             }

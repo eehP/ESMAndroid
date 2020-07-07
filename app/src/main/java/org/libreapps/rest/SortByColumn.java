@@ -14,6 +14,11 @@ public class SortByColumn {
         String[][] m_sortTable;
         List<BillJSON> m_finalTable;
         switch(m_sortType){
+            case "Id" :
+                m_sortTable = myStringSort(BillList_ToStringArray(list), 0);
+                m_finalTable = StringArray_ToBillList(m_sortTable);
+                break;
+
             case "Name":
             case "Nickname":
                 m_sortTable = myStringSort(BillList_ToStringArray(list), 1);
@@ -134,7 +139,6 @@ public class SortByColumn {
                 m_value = m_value+m_digits[add_element];
             }
             m_price[0] = m_value;
-            System.out.println(m_price[0]);
             if(m_price.length == 1){
                 transposed[increment][m_column] = m_price[0];
             }else{

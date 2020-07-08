@@ -83,7 +83,7 @@ public class SortByColumn {
         Arrays.sort(transposed, new Comparator<String[]>() {
             @Override
             public int compare(String[] a1, String[] a2) {
-                return a1[m_column].compareTo(a2[m_column]);
+                return a1[m_column].compareToIgnoreCase(a2[m_column]);
             }
         });
         return transposed;

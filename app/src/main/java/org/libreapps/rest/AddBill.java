@@ -43,24 +43,26 @@ public class AddBill extends AppCompatActivity {
         List<String> list = new ArrayList<String>();
 
         list.add("Restaurant: Seul");
-        list.add("Restaurant: Invitation");
+        list.add("Restaurant: Groupe");
+        list.add("Restaurant: Autre");
 
         list.add("Hôtel: Jour");
         list.add("Hôtel: Semaine");
-        list.add("Hôtel: Mois");
+        list.add("Hôtel: Autre");
 
-        list.add("Voiture: Plein");
-        list.add("Voiture: Pléage");
-        list.add("Voiture: Réparation");
+        list.add("Voiture: Carburant");
+        list.add("Voiture: Péage");
+        list.add("Voiture: Autre");
 
         list.add("Transport: Avion");
         list.add("Transport: Train");
         list.add("Transport: Métro/Tram/Bus");
-        list.add("Transport: Taxis");
+        list.add("Transport: Taxi");
+        list.add("Transport: Autre");
 
         list.add("Voyage: France");
         list.add("Voyage: Europe");
-        list.add("Voyage: Mondial");
+        list.add("Voyage: Autre");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);

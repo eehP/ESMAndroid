@@ -16,7 +16,6 @@ import static android.widget.Toast.LENGTH_LONG;
 public class LoginActivity extends AppCompatActivity {
     private EditText userEmail;
     private EditText userPassword;
-    private Button buttonlogin;
     private String action = "bills", token;
     private String error = "Login ou mot de passe incorrect.";
 
@@ -26,8 +25,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         userEmail = (EditText)findViewById(R.id.user_email);
         userPassword = (EditText)findViewById(R.id.user_password);
-        buttonlogin = (Button)findViewById(R.id.button_login);
-        buttonlogin.setOnClickListener(new View.OnClickListener() {
+        Button buttonLogin = (Button) findViewById(R.id.button_login);
+        Button buttonRegister = (Button) findViewById(R.id.button_register);
+
+        userEmail.setText("");
+        userPassword.setText("");
+
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -40,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
                     ConnectionRest connectionRest = new ConnectionRest();
                     connectionRest.setJsonObj(jAuth);
                     connectionRest.setAction("auth");
-                    connectionRest.setToken(token);
                     connectionRest.execute("POST");
                     String token = (String) connectionRest.get();
                     if(token.charAt(0) !='{') {
@@ -56,6 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                     toast.showToast(getApplicationContext(), error, LENGTH_LONG);
                     e.printStackTrace();
                 }
+            }
+        });
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
             }
         });
     }

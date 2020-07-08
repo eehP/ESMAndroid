@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.libreapps.rest.SortByColumn;
 
 public class SummaryBills extends AppCompatActivity {
 
     private String token = null;
+    private SortByColumn m_sorter = new SortByColumn();
     BillTableModel tableModel;
 
     @Override
@@ -23,6 +25,8 @@ public class SummaryBills extends AppCompatActivity {
         tableModel.setToken(token);
         String[][] bills = tableModel.getBills();
 
+        bills = this.m_sorter.myIdSort(bills);
+        
         setContentView(R.layout.bill_summary);
         LinearLayout m_elementsList = findViewById(R.id.list_elements);
         findViewById(R.id.last_elements).setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);

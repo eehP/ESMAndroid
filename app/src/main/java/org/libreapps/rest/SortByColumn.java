@@ -76,6 +76,37 @@ public class SortByColumn {
         return m_list;
     }
 
+    public static String[][] myIdSort(String[][] data) {
+        String[][] transposed = data;
+        for(int increment = 0; increment < transposed.length; increment++){
+            String m_price = transposed[increment][0];
+            for(int zeroIncrement = m_price.length(); zeroIncrement<6; zeroIncrement++){
+                m_price = "0" + m_price;
+            }
+            transposed[increment][0] = m_price;
+        }
+        Arrays.sort(transposed, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] a1, String[] a2) {
+                return a1[0].compareTo(a2[0]);
+            }
+        });
+        for(int increment = 0; increment < transposed.length; increment++){
+            String m_price = transposed[increment][0];
+            String[] m_digits = m_price.split("");
+            int m_zeroIncrement = 0;
+            while(m_zeroIncrement<m_digits.length && m_digits[m_zeroIncrement].equals("0")){
+                m_zeroIncrement += 1;
+            }
+            String m_value = "";
+            for(int add_element = m_zeroIncrement; add_element < m_digits.length; add_element++){
+                m_value = m_value+m_digits[add_element];
+            }
+            transposed[increment][0] = m_value;
+        }
+        return transposed;
+    }
+
     private static String[][] myStringSort(String[][] data, final int m_column) {
         String[][] transposed = data;
         Arrays.sort(transposed, new Comparator<String[]>() {

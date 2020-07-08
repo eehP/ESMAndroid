@@ -35,7 +35,7 @@ public class SummaryBills extends AppCompatActivity {
             for(int completedSize = 0; completedSize < (40 - bills[increment][3].length() - bills[increment][1].length()); completedSize++){
                 m_completion += " ";
             }
-            String m_data = "\t\t" + bills[increment][2].toString() + m_completion + bills[increment][4].toString() +
+            String m_data = "\t\t" + bills[increment][2].toString() + "\n\t\t" + bills[increment][4].toString() +
                             "\n\n\t\t" + bills[increment][1].toString()  + m_completion + bills[increment][3].toString() + " €";
 
             TextView m_element = new TextView(this);

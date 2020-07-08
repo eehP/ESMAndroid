@@ -68,7 +68,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     }
 
     private Filter modelClassFilter = new Filter() {
-
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<BillJSON> filteredList = new ArrayList<>();
@@ -97,7 +96,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
 
             notifyDataSetChanged();
         }
-
     };
 
     class ViewHolder extends RecyclerView.ViewHolder {

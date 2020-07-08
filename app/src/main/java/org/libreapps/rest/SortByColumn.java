@@ -1,8 +1,6 @@
 package org.libreapps.rest;
-
 import org.json.JSONArray;
 import org.libreapps.rest.ViewSearch.BillJSON;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;

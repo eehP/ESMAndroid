@@ -97,14 +97,14 @@
         android:id="@+id/priceEditTxt"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="0.0€"
         android:inputType="numberDecimal"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/editTextType" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerType" />
 
     <TextView
         android:id="@+id/textview_price"
@@ -154,18 +154,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_date" />
 
-        <EditText
-        android:id="@+id/editTextType"
+        <Spinner
+        android:id="@+id/spinnerType"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/btn_dropdown_design"
         android:ems="10"
-        android:hint="Type"
-        android:inputType="textAutoComplete"
+        android:text="Type"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
-
+    
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -175,5 +176,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="22dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerType"
+        app:layout_constraintTop_toTopOf="@+id/spinnerType"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddBill extends AppCompatActivity {
 
@@ -33,8 +37,35 @@ public class AddBill extends AppCompatActivity {
         final EditText nameEditTxt = (EditText) findViewById(R.id.nameEditTxt);
         final EditText nicknameEditTxt = (EditText) findViewById(R.id.nameEditTxt2);
         final EditText dateEditTxt = (EditText) findViewById(R.id.editTextDate);
-        final EditText typeEditTxt = (EditText) findViewById(R.id.editTextType);
         final EditText priceEditTxt = (EditText) findViewById(R.id.priceEditTxt);
+        final Spinner typeSpinner = (Spinner) findViewById(R.id.spinnerType);
+
+        List<String> list = new ArrayList<String>();
+
+        list.add("Restaurant: Seul");
+        list.add("Restaurant: Invitation");
+
+        list.add("Hôtel: Jour");
+        list.add("Hôtel: Semaine");
+        list.add("Hôtel: Mois");
+
+        list.add("Voiture: Plein");
+        list.add("Voiture: Pléage");
+        list.add("Voiture: Réparation");
+
+        list.add("Transport: Avion");
+        list.add("Transport: Train");
+        list.add("Transport: Métro/Tram/Bus");
+        list.add("Transport: Taxis");
+
+        list.add("Voyage: France");
+        list.add("Voyage: Europe");
+        list.add("Voyage: Mondial");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(dataAdapter);
 
         Button buttonOk = (Button) findViewById(R.id.button_ok);
         Button buttonCancel = (Button) findViewById(R.id.button_cancel);
@@ -50,7 +81,7 @@ public class AddBill extends AppCompatActivity {
             nameEditTxt.setText(lastName);
             nicknameEditTxt.setText(firstName);
             dateEditTxt.setText(date);
-            typeEditTxt.setText(type);
+            typeSpinner.setSelection(list.indexOf(type));
             priceEditTxt.setText("" + price);
             buttonOk.setText("Modifier");
             buttonDelete.setText("Supprimer");
@@ -69,12 +100,12 @@ public class AddBill extends AppCompatActivity {
                     regexControl(nameEditTxt.getText().toString(), "Name");
                     regexControl(nicknameEditTxt.getText().toString(), "Nickname");
                     regexControl(dateEditTxt.getText().toString(), "Date");
-                    regexControl(typeEditTxt.getText().toString(), "Type");
+                    regexControl(String.valueOf(typeSpinner.getSelectedItem()), "Type");
                     regexControl(priceEditTxt.getText().toString(), "Price");
 
                     bill.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
                     bill.put("date", dateEditTxt.getText().toString());
-                    bill.put("type", typeEditTxt.getText().toString());
+                    bill.put("type", String.valueOf(typeSpinner.getSelectedItem()));
                     bill.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
                     connectionRest.setToken(token);
                     connectionRest.setJsonObj(bill);

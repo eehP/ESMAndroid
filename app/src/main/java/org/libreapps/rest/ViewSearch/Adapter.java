@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.libreapps.rest.R;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable {
 
@@ -55,6 +56,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements
     @Override
     public int getItemCount() {
         return modelClassList.size();
+    }
+
+    public List<BillJSON> get_actualList(){
+        return this.modelClassList;
     }
 
     @Override

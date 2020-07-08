@@ -21,5 +21,10 @@
     <string name="hint_password">Enter Password</string>
     <string name="hint_username">Username</string>
     <string name="logo">Logo</string>
+    <string name="sort">Tri</string>
+    <string name="Name">Nom</string>
+    <string name="Date">Date</string>
+    <string name="Price">Prix</string>
+    <string name="Type">Type</string>
     <string name="Register">Register</string>
 </resources>

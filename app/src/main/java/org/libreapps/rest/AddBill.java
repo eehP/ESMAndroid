@@ -174,13 +174,7 @@ public class AddBill extends AppCompatActivity {
         switch(m_type){
             case "Name":
             case "Nickname":
-                if(m_element.matches("[a-zA-ZÉ]{1}[a-zA-Z_-éèê]{0,23}[a-zA-Zéèê]{0,1}")){
                     return true;
-                }else{
-                    returnAlert("Name Error", "Le Nom/Prénom que vous avez saisi n'est pas valide, caractère spécial autorisé: '-'.");
-                    throw new IllegalAccessException("Name Error");
-                }
-
             case "Date":
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 

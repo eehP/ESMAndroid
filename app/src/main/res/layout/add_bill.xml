@@ -181,9 +181,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerType"
+        android:layout_width="22dp"
+        android:layout_height="25dp"
         app:layout_constraintEnd_toEndOf="@+id/spinnerType"
         app:layout_constraintTop_toTopOf="@+id/spinnerType"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />

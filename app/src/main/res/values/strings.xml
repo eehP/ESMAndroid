@@ -18,8 +18,8 @@
     <string name="search">Search</string>
     <string name="gestion_context">10 dernières notes de frais ajoutées</string>
     <string name="login">LOGIN</string>
-    <string name="hint_password">Enter Password</string>
-    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_mail">Mail</string>
     <string name="logo">Logo</string>
     <string name="sort">Tri</string>
     <string name="Name">Nom</string>

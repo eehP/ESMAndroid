@@ -10,8 +10,31 @@
         app:actionViewClass="android.widget.SearchView"
         android:title="@string/search" />
     <item
-        android:id="@+id/action_sort"
+        android:id="@+id/sort_view"
         android:icon="@mipmap/ic_sort"
         app:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/sort" />
+        android:title="@string/sort">
+        <menu>
+            <item
+                android:id="@+id/action_nameSort"
+                android:icon="@mipmap/ic_user_sort"
+                app:showAsAction="ifRoom|collapseActionView"
+                android:title="@string/Name" />
+            <item
+                android:id="@+id/action_dateSort"
+                android:icon="@mipmap/ic_user_date"
+                android:title="@string/Date"
+                app:showAsAction="ifRoom|collapseActionView" />
+            <item
+                android:id="@+id/action_priceSort"
+                android:icon="@mipmap/ic_user_price"
+                app:showAsAction="ifRoom|collapseActionView"
+                android:title="@string/Price" />
+            <item
+                android:id="@+id/action_typeSort"
+                android:icon="@mipmap/ic_user_type"
+                app:showAsAction="ifRoom|collapseActionView"
+                android:title="@string/Type" />
+        </menu>
+    </item>
 </menu>

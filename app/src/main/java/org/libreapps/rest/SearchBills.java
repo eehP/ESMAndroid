@@ -87,13 +87,61 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
-        MenuItem sortItem = menu.findItem(R.id.action_sort);
+        MenuItem sortNameItem = menu.findItem(R.id.action_nameSort);
+        MenuItem sortDateItem = menu.findItem(R.id.action_dateSort);
+        MenuItem sortTypeItem = menu.findItem(R.id.action_typeSort);
+        MenuItem sortPriceItem = menu.findItem(R.id.action_priceSort);
 
-        sortItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        sortNameItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(m_sortStatus != "Name"){
                     m_sortStatus = "Name";
+                    List<BillJSON> m_bills = adapter.get_actualList();
+                    m_bills = m_sorter.sortTable(m_bills, m_sortStatus);
+                    adapter.setData(m_bills);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                }
+                return false;
+            }
+        });
+
+        sortDateItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(m_sortStatus != "Date"){
+                    m_sortStatus = "Date";
+                    List<BillJSON> m_bills = adapter.get_actualList();
+                    m_bills = m_sorter.sortTable(m_bills, m_sortStatus);
+                    adapter.setData(m_bills);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                }
+                return false;
+            }
+        });
+
+        sortTypeItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(m_sortStatus != "Type"){
+                    m_sortStatus = "Type";
+                    List<BillJSON> m_bills = adapter.get_actualList();
+                    m_bills = m_sorter.sortTable(m_bills, m_sortStatus);
+                    adapter.setData(m_bills);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                }
+                return false;
+            }
+        });
+
+        sortPriceItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(m_sortStatus != "Price"){
+                    m_sortStatus = "Price";
                     List<BillJSON> m_bills = adapter.get_actualList();
                     m_bills = m_sorter.sortTable(m_bills, m_sortStatus);
                     adapter.setData(m_bills);
@@ -130,11 +178,12 @@ public class SearchBills extends AppCompatActivity implements RecyclerViewClickI
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(SearchBills.this, AddBill.class);
-        intent.putExtra("id", Integer.parseInt(bills.get(position).getId()));
-        intent.putExtra("name", bills.get(position).getName());
-        intent.putExtra("date", bills.get(position).getDate());
-        intent.putExtra("type", bills.get(position).getType());
-        intent.putExtra("price", Double.parseDouble(bills.get(position).getPrice()));
+        List<BillJSON> actualBills = adapter.get_actualList();
+        intent.putExtra("id", Integer.parseInt(actualBills.get(position).getId()));
+        intent.putExtra("name", actualBills.get(position).getName());
+        intent.putExtra("date", actualBills.get(position).getDate());
+        intent.putExtra("type", actualBills.get(position).getType());
+        intent.putExtra("price", Double.parseDouble(actualBills.get(position).getPrice()));
         intent.putExtra("token", token);
         startActivity(intent);
     }

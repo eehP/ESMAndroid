@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class AddBill extends AppCompatActivity {
 
     String token;
@@ -34,6 +36,7 @@ public class AddBill extends AppCompatActivity {
         String type = getIntent().getStringExtra("type");
         Double price = getIntent().getDoubleExtra("price",1.0);
 
+        final String success = "Note de Frais créée";
         final EditText nameEditTxt = (EditText) findViewById(R.id.nameEditTxt);
         final EditText nicknameEditTxt = (EditText) findViewById(R.id.nameEditTxt2);
         final EditText dateEditTxt = (EditText) findViewById(R.id.editTextDate);
@@ -88,6 +91,44 @@ public class AddBill extends AppCompatActivity {
             buttonOk.setText("Modifier");
             buttonDelete.setText("Supprimer");
         }
+        buttonOk.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                try {
+                    ConnectionRest connectionRest = new ConnectionRest();
+                    JSONObject bill = new JSONObject();
+                    if(id != 0){
+                        bill.put("id", id);
+                    }
+
+                    regexControl(nameEditTxt.getText().toString(), "Name");
+                    regexControl(nicknameEditTxt.getText().toString(), "Nickname");
+                    regexControl(dateEditTxt.getText().toString(), "Date");
+                    regexControl(String.valueOf(typeSpinner.getSelectedItem()), "Type");
+                    regexControl(priceEditTxt.getText().toString(), "Price");
+
+                    bill.put("name", nameEditTxt.getText().toString() + " " + nicknameEditTxt.getText().toString());
+                    bill.put("date", dateEditTxt.getText().toString());
+                    bill.put("type", String.valueOf(typeSpinner.getSelectedItem()));
+                    bill.put("price", Double.parseDouble(priceEditTxt.getText().toString()));
+                    connectionRest.setToken(token);
+                    connectionRest.setJsonObj(bill);
+
+
+                    if(id == 0){
+                        connectionRest.execute("POST");
+                        Toast toast = new Toast();
+                        toast.showToast(getApplicationContext(), success, LENGTH_LONG);
+                        Intent intent = new Intent(AddBill.this, AddBill.class);
+                        intent.putExtra("token", token);
+                        startActivity(intent);
+                    }
+                } catch (JSONException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,14 +156,23 @@ public class AddBill extends AppCompatActivity {
 
                     if(id != 0){
                         connectionRest.execute("PUT");
+                        Toast toast = new Toast();
+                        String modified = "Note de Frais modifiée";
+                        toast.showToast(getApplicationContext(), modified, LENGTH_LONG);
+                        Intent intent = new Intent(AddBill.this, SearchBills.class);
+                        intent.putExtra("token", token);
+                        startActivity(intent);
                     }
                     else {
                         connectionRest.execute("POST");
+                        Toast toast = new Toast();
+                        toast.showToast(getApplicationContext(), success, LENGTH_LONG);
+                        Intent intent = new Intent(AddBill.this, SummaryBills.class);
+                        intent.putExtra("token", token);
+                        startActivity(intent);
                     }
 
-                    Intent intent = new Intent(AddBill.this, SearchBills.class);
-                    intent.putExtra("token", token);
-                    startActivity(intent);
+
                 } catch (JSONException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -156,6 +206,9 @@ public class AddBill extends AppCompatActivity {
                         connectionRest.setJsonObj(bill);
                         connectionRest.setToken(token);
                         connectionRest.execute("DELETE");
+                        Toast toast = new Toast();
+                        String deleted = "Note de Frais supprimée";
+                        toast.showToast(getApplicationContext(), deleted, LENGTH_LONG);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();

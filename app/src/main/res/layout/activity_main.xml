@@ -23,17 +23,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-    android:id="@+id/summary"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:background="@drawable/btn_classic"
-    android:drawableLeft="@drawable/ic_baseline_list_24"
-    android:text="Notes de Frais"
-    android:textColor="#FFFFFF"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/add" />
+        android:id="@+id/summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/btn_classic"
+        android:drawableLeft="@drawable/ic_baseline_list_24"
+        android:text="Notes de Frais"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -44,5 +44,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
+
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="61dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:drawableTop="@mipmap/ic_lock"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/summary"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
